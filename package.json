@@ -10,7 +10,7 @@
     "start": "node internal/dev-server",
     "build": "webpack --config config/webpack.js --progress --env.production",
     "lint": "eslint '{config,internal,src}/**/*.js'",
-    "test": "jest --config=internal/jest.config.json"
+    "test": "jest --config=config/jest.json"
   },
   "author": "Thanik Bhongbhibhat <bhongbhibhat@gmail.com>",
   "license": "MIT",
@@ -26,6 +26,7 @@
     "clean-webpack-plugin": "0.1.16",
     "css-loader": "0.28.4",
     "css-mqpacker": "6.0.1",
+    "enzyme": "2.9.1",
     "eslint": "3.19.0",
     "eslint-config-airbnb": "^15.0.2",
     "eslint-plugin-import": "^2.7.0",
@@ -45,6 +46,7 @@
     "postcss-nesting": "4.0.1",
     "postcss-scss": "1.0.1",
     "react-hot-loader": "next",
+    "react-test-renderer": "15.6.1",
     "style-loader": "0.18.2",
     "webpack": "2.6.1",
     "webpack-dev-middleware": "1.10.2",
