@@ -17,9 +17,10 @@ const presets = [
 
 exports.development = {
   presets,
-  plugins: ['react-hot-loader/babel'],
 }
+  plugins: ['lodash', 'react-hot-loader/babel'],
 
 exports.production = {
   presets,
 }
+  plugins: ['lodash'],
