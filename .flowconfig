@@ -15,4 +15,5 @@
 [options]
 esproposal.class_instance_fields=enable
 esproposal.class_static_fields=enable
-suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+suppress_comment=\\(.\\|\n\\)*\\$FlowExpectError
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe
