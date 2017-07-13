@@ -1,5 +1,6 @@
 // avoid using "env" in `.babelrc` in favor of moving
 // toward new API in Babel 7
+// https://github.com/babel/babel/issues/5276
 
 const presets = [
   [

@@ -31,6 +31,7 @@ module.exports = {
         include: project.paths.src(),
         options: Object.assign(
           {
+            babelrc: false,
             // enable caching for faster webpack rebuild
             cacheDirectory: true,
           },

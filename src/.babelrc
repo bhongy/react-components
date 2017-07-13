@@ -1,0 +1,25 @@
+/*
+  TEMPORARY HACK: only use to run tests with Jest
+  ---
+  Babel 7 provides clean, cross env API to handle environments
+  as implemented in `config/babel.js`
+
+  Current `babel-jest` does not allow "requiring" babel config as a module
+  (unlike webpack `babel-loader`) hence this separated `.babelrc`
+*/
+
+{
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": "6.9.0"
+        }
+      }
+    ],
+    "stage-2",
+    "react"
+  ],
+  "plugins": ["lodash"]
+}

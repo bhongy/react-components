@@ -26,7 +26,10 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         include: project.paths.src(),
-        options: Object.assign({}, require('./babel').production),
+        options: Object.assign(
+          { babelrc: false },
+          require('./babel').production,
+        ),
       },
       {
         test: /\.css$/,
