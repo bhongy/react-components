@@ -1,4 +1,12 @@
-// @flow
+/**
+ * A thin wrapper around HTMLInputElement that state as number type
+ * rather than string - avoid ad-hoc string/number handling at use sites.
+ * Handles precision and trailing period. See unit tests for the detail spec.
+ *
+ * TODO: handle formatting (could be tricky with change event value)
+ *
+ * @flow
+ */
 
 import React, { Component } from 'react';
 import { invoke } from 'lodash';
@@ -120,3 +128,25 @@ class NumericInput extends Component<void, Props, State> {
 }
 
 export default NumericInput;
+
+export class NumericInputDemo extends Component {
+  state: { value: NumericValue } = { value: 3.141593 };
+
+  // $FlowFixMe: how do I type this?
+  handleChange = ({ value }) => this.setState({ value });
+
+  render() {
+    const { value } = this.state;
+
+    return (
+      <div>
+        <h3>NumericInput</h3>
+        <NumericInput
+          initialValue={this.state.value}
+          onChange={this.handleChange}
+        />
+        <pre>state.value = {this.state.value}</pre>
+      </div>
+    );
+  }
+}
