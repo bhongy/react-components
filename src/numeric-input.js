@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import { invoke } from 'lodash';
 
 type NumericValue = number;
-type InputChangeEvent = Event & {  // is there a way to declare close to `handleChange` ?
+// is there a way to declare this close to `handleChange` ?
+type InputChangeEvent = Event & {
   currentTarget: HTMLInputElement & { value: string, name?: string },
 };
 
@@ -75,33 +76,37 @@ class NumericInput extends Component<void, Props, State> {
       return;
     }
 
-    if (!this.props.hasOwnProperty('precision')) {
-      this.handleStateUpdate(numericValue, inputValue, name);
+    // transformations assume that the inputValue can be safely converted
+    // to float and without multiple periods (e.g. "01a" or "01.10.")
+    // keep this after the "bail" check
+    const newState: State = this.handlePrecision({
+      value: numericValue,
+      inputValue,
+    });
+
+    if (newState === this.state) {
       return;
     }
 
-    // precision handler assumes that the inputValue
-    // can be safely converted to float and without multiple
-    // periods (e.g. "01a" or "01.10."), so it must be called
-    // after the "bail" check in the beginning of the onChange handler
-    const precisionedInputValue: string = truncateInputValueToPrecision(
-      inputValue,
+    this.setState(newState, (): void => {
+      // TODO: figure out how to fix Flow uncovered code here
+      // prefer to avoid ad-hoc null coalescing function
+      invoke(this.props, 'onChange', { value: this.state.value, name });
+    });
+  };
+
+  handlePrecision = (newState: State): State => {
+    const truncated: string = truncateInputValueToPrecision(
+      newState.inputValue,
       this.props.precision
     );
 
-    if (this.state.inputValue !== precisionedInputValue) {
-      this.handleStateUpdate(+precisionedInputValue, precisionedInputValue, name);
-      return;
+    if (this.state.inputValue === truncated) {
+      return this.state;
     }
-  };
 
-  handleStateUpdate = (value: NumericValue, inputValue: string, name?: string): void => {
-    this.setState({ value, inputValue }, (): void => {
-      // TODO: figure out how to fix Flow uncovered code here
-      // prefer to avoid ad-hoc null coalescing function
-      invoke(this.props, 'onChange', { value, name });
-    })
-  };
+    return { value: +truncated, inputValue: truncated };
+  }
 
   render() {
     return (
