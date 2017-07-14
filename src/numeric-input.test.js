@@ -234,4 +234,71 @@ describe('Components: Numeric Input', () => {
       expect(handlePrecision('300.', precision)).toBe('300.');
     });
   });
+
+  describe('... handle precision (in component)', () => {
+    /*
+      Known issue: precision is ignored during initialization
+      because I'm not sure what's the good, expected behavior
+      - i.e. we might not want to change the controlled state
+        on mount (only do so on input change) or maybe we do?
+    */
+
+    it('should not handle precision if precision is not provided', () => {
+      rendered.simulate('change', createInputEvent('89.99500000000000000'));
+
+      expectResult(rendered).toEqual({
+        state: 89.995,
+        inputValue: '89.99500000000000000',
+      });
+    });
+
+    it('should limit the number of decimals in both state and inputValue to the precision', () => {
+      rendered = shallow(<NumericInput precision={2} />);
+      rendered.simulate('change', createInputEvent('63.9876'));
+
+      expectResult(rendered).toEqual({
+        state: 63.98,
+        inputValue: '63.98',
+      });
+    });
+
+    it('should ignore further input once the number of decimals reaches the precision', () => {
+      rendered = shallow(<NumericInput precision={1} />);
+      rendered.simulate('change', createInputEvent('77.1'));
+
+      expectResult(rendered).toEqual({
+        state: 77.1,
+        inputValue: '77.1',
+      });
+
+      const state: State = rendered.state();
+
+      rendered.simulate('change', createInputEvent('77.12'));
+
+      expectResult(rendered).toEqual({
+        state: 77.1,
+        inputValue: '77.1',
+      });
+
+      // should ignore and do not change state
+      expect(rendered.state()).toBe(state);
+    });
+
+    it('should only allow one period when precision is more than 0', () => {
+      rendered = shallow(<NumericInput precision={2} />);
+      rendered.simulate('change', createInputEvent('10.12'));
+
+      expectResult(rendered).toEqual({
+        state: 10.12,
+        inputValue: '10.12',
+      });
+
+      rendered.simulate('change', createInputEvent('10.12.'));
+
+      expectResult(rendered).toEqual({
+        state: 10.12,
+        inputValue: '10.12',
+      });
+    });
+  });
 });
