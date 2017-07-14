@@ -3,20 +3,20 @@
 import React, { Component } from 'react';
 import { invoke } from 'lodash';
 
-type Value = number;
+type NumericValue = number;
 
 type Props = {
-  initialValue?: Value,
-  onChange?: (obj: { value: Value, name?: string }) => void,
+  initialValue?: NumericValue,
+  onChange?: (obj: { value: NumericValue, name?: string }) => void,
   // precision: number,
 };
 
 export type State = {
-  value: Value | null,
   inputValue: string,
+  value: NumericValue | null,
 };
 
-function handleInitialValue(value?: Value): State {
+function handleInitialValue(value?: NumericValue): State {
   // `Number.isFinite` is better but no pre-edge IE support
   // ? how to avoid checking type and use only `Number.isFinite` with Flow ?
   if (typeof value === 'number' && isFinite(value)) {
@@ -30,6 +30,27 @@ function handleInitialValue(value?: Value): State {
     value: null,
     inputValue: '',
   };
+}
+
+export function truncateInputValueToPrecision(
+  inputValue: string,
+  precision: number
+): string {
+  if (
+    typeof precision !== 'number' ||
+    precision % 1 !== 0 ||
+    precision < 0
+  ) {
+    return inputValue; // invalid use, should throw instead ?
+  }
+
+  const [integer, decimals]: Array<string> = inputValue.split('.');
+
+  if (precision === 0 || typeof decimals === 'undefined') {
+    return integer;
+  }
+
+  return [integer, decimals.slice(0, precision)].join('.');
 }
 
 class NumericInput extends Component<void, Props, State> {
@@ -46,9 +67,9 @@ class NumericInput extends Component<void, Props, State> {
     const {
       name,
       value: inputValue,
-    // $FlowFixMe: how to use Flow with destructuring correctly
-    }: { value: string, name?: string } = event.currentTarget;
-    const numericValue: Value = +inputValue;
+    }// $FlowFixMe: how to use Flow with destructuring correctly
+    : { value: InputValue, name?: string } = event.currentTarget;
+    const numericValue: NumericValue = +inputValue;
 
     if (isNaN(numericValue)) {
       return;
@@ -57,7 +78,7 @@ class NumericInput extends Component<void, Props, State> {
     this.setState({ value: numericValue, inputValue }, () => {
       // TODO: figure out how to fix Flow uncovered code here
       // prefer to avoid ad-hoc null coalescing function
-      invoke(this.props, 'onChange', { value: numericValue, name })
+      invoke(this.props, 'onChange', { value: numericValue, name });
     });
   };
 

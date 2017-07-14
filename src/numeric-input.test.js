@@ -4,7 +4,9 @@ import React from 'react';
 import type { ShallowWrapper } from 'enzyme';
 import { shallow } from 'enzyme';
 import type { State } from './numeric-input';
-import NumericInput from './numeric-input';
+import NumericInput, {
+  truncateInputValueToPrecision as handlePrecision,
+} from './numeric-input';
 
 const createInputEvent = (value: string, name?: string) => ({
   currentTarget: { name, value },
@@ -190,6 +192,46 @@ describe('Components: Numeric Input', () => {
         state: 72.1,
         inputValue: '72.1',
       });
+    });
+  });
+
+  describe('... handle precision (function)', () => {
+    it('should treat all non-positive integer values as if precision is not provided', () => {
+      [
+        2.9,
+        -2,
+        NaN,
+        Infinity,
+        '2',
+        undefined,
+        null,
+        { foo: 2 },
+      ].forEach((precision) => {
+        const val = '48.123456789';
+
+        // $FlowExpectError
+        expect(handlePrecision(val, precision)).toBe(val);
+      });
+    });
+
+    it('should handle integer inputValue for precision more than 0 correctly', () => {
+      const precision = 5;
+
+      expect(handlePrecision('300', precision)).toBe('300');
+      expect(handlePrecision('300.123456789', precision)).toBe('300.12345');
+    });
+
+    it('should not allow trailing period for precision 0', () => {
+      const precision = 0;
+
+      expect(handlePrecision('90.', precision)).toBe('90');
+      expect(handlePrecision('65.360', precision)).toBe('65');
+    });
+
+    it('should allow one trailing period for precision more than 0', () => {
+      const precision = 2;
+
+      expect(handlePrecision('300.', precision)).toBe('300.');
     });
   });
 });
