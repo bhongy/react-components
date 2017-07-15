@@ -11,24 +11,23 @@
 import React, { Component } from 'react';
 import { invoke } from 'lodash';
 
-type NumericValue = number;
 // is there a way to declare this close to `handleChange` ?
-type InputChangeEvent = Event & {
+type InputChangeEvent = SyntheticInputEvent & {
   currentTarget: HTMLInputElement & { value: string, name?: string },
 };
 
 type Props = {
-  initialValue?: NumericValue,
-  onChange?: (obj: { value: NumericValue, name?: string }) => void,
+  initialValue?: number,
+  onChange?: (obj: { value: number, name?: string }) => void,
   precision?: number,
 };
 
 export type State = {
   inputValue: string,
-  value: NumericValue | null,
+  value: number | null,
 };
 
-function handleInitialValue(value?: NumericValue): State {
+function handleInitialValue(value?: number): State {
   // `Number.isFinite` is better but no pre-edge IE support
   // ? how to avoid checking type and use only `Number.isFinite` with Flow ?
   if (typeof value === 'number' && isFinite(value)) {
@@ -77,7 +76,7 @@ class NumericInput extends Component<void, Props, State> {
     // create a copy of "name" value because React synthetic event is re-used
     // hence we cannot rely on the reference like `event.currentTarget.name`
     const { name, value: inputValue } = event.currentTarget;
-    const numericValue: NumericValue = +inputValue;
+    const numericValue: number = +inputValue;
 
     // bail early if input is invalid
     if (isNaN(numericValue)) {
@@ -117,9 +116,11 @@ class NumericInput extends Component<void, Props, State> {
   }
 
   render() {
+    const { initialValue, ...passThroughProps } = this.props;
+
     return (
       <input
-        {...this.props}
+        {...passThroughProps}
         onChange={this.handleChange}
         value={this.state.inputValue}
       />
@@ -130,7 +131,7 @@ class NumericInput extends Component<void, Props, State> {
 export default NumericInput;
 
 export class NumericInputDemo extends Component {
-  state: { value: NumericValue } = { value: 3.141593 };
+  state = { value: 3.141593 };
 
   // $FlowFixMe: how do I type this?
   handleChange = ({ value }) => this.setState({ value });
