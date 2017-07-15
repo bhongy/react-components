@@ -9,7 +9,6 @@
  */
 
 import React, { Component } from 'react';
-import { invoke } from 'lodash';
 
 // is there a way to declare this close to `handleChange` ?
 type InputChangeEvent = SyntheticInputEvent & {
@@ -17,17 +16,17 @@ type InputChangeEvent = SyntheticInputEvent & {
 };
 
 type Props = {
-  initialValue?: number,
-  onChange?: (obj: { value: number | null, name?: string }) => void,
+  initialValue?: ?number,
+  onChange?: (obj: { value: ?number, name?: string }) => void,
   precision?: number,
 };
 
 export type State = {
   inputValue: string,
-  value: number | null,
+  value: ?number,
 };
 
-function handleInitialValue(value?: number): State {
+function handleInitialValue(value: ?number): State {
   if (typeof value === 'number' && isFinite(value)) {
     return {
       value,
@@ -94,9 +93,11 @@ class NumericInput extends Component<void, Props, State> {
     }
 
     this.setState(newState, (): void => {
-      // TODO: figure out how to fix Flow uncovered code here
-      // prefer to avoid ad-hoc null coalescing function
-      invoke(this.props, 'onChange', { value: this.state.value, name });
+      const { onChange } = this.props;
+
+      if (typeof onChange === 'function') {
+        onChange({ value: this.state.value, name });
+      }
     });
   };
 
@@ -116,7 +117,7 @@ class NumericInput extends Component<void, Props, State> {
   };
 
   render() {
-    const { initialValue, ...passThroughProps } = this.props;
+    const { initialValue, ...passThroughProps }: Props = this.props;
 
     return (
       <input
@@ -131,10 +132,10 @@ class NumericInput extends Component<void, Props, State> {
 export default NumericInput;
 
 export class NumericInputDemo extends Component {
-  state = { value: 3.141593 };
+  state: { value: ?number } = { value: 3.141593 };
 
-  // $FlowFixMe: how do I type this?
-  handleChange = ({ value }) => this.setState({ value });
+  handleChange = (args: { value: ?number }): void =>
+    this.setState({ value: args.value });
 
   render() {
     const { value } = this.state;

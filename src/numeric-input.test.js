@@ -42,6 +42,7 @@ describe('Components: Numeric Input', () => {
         true,
         false,
       ].forEach((value) => {
+        // $FlowExpectError
         rendered = shallow(<NumericInput initialValue={value} />);
 
         expectResult(rendered).toEqual({
@@ -218,6 +219,7 @@ describe('Components: Numeric Input', () => {
       ].forEach((precision) => {
         const val = '48.123456789';
 
+        // $FlowExpectError
         expect(handlePrecision(val, precision)).toBe(val);
       });
     });
