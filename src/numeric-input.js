@@ -28,8 +28,6 @@ export type State = {
 };
 
 function handleInitialValue(value?: number): State {
-  // `Number.isFinite` is better but no pre-edge IE support
-  // ? how to avoid checking type and use only `Number.isFinite` with Flow ?
   if (typeof value === 'number' && isFinite(value)) {
     return {
       value,
@@ -52,7 +50,9 @@ export function truncateInputValueToPrecision(
     precision % 1 !== 0 ||
     precision < 0
   ) {
-    return inputValue; // invalid use, should throw instead ?
+    // handle invalid `precision` param
+    // ? should throw instead ?
+    return inputValue;
   }
 
   const [integer, decimals]: Array<string> = inputValue.split('.');
@@ -65,7 +65,7 @@ export function truncateInputValueToPrecision(
 }
 
 class NumericInput extends Component<void, Props, State> {
-  state: State; // don't know why I need to do this
+  state: State; // don't know why I need to do this together with Generics
 
   constructor(props: Props): void {
     super(props);
