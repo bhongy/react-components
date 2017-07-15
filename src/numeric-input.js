@@ -18,7 +18,7 @@ type InputChangeEvent = SyntheticInputEvent & {
 
 type Props = {
   initialValue?: number,
-  onChange?: (obj: { value: number, name?: string }) => void,
+  onChange?: (obj: { value: number | null, name?: string }) => void,
   precision?: number,
 };
 
@@ -76,21 +76,19 @@ class NumericInput extends Component<void, Props, State> {
     // create a copy of "name" value because React synthetic event is re-used
     // hence we cannot rely on the reference like `event.currentTarget.name`
     const { name, value: inputValue } = event.currentTarget;
-    const numericValue: number = +inputValue;
 
-    // bail early if input is invalid
-    if (isNaN(numericValue)) {
+    // bail early (do not change state) if input is invalid
+    if (isNaN(+inputValue)) {
       return;
     }
 
     // transformations assume that the inputValue can be safely converted
     // to float and without multiple periods (e.g. "01a" or "01.10.")
     // keep this after the "bail" check
-    const newState: State = this.handlePrecision({
-      value: numericValue,
-      inputValue,
-    });
+    const newState: State = this.handlePrecision(inputValue);
 
+    // do not `setState` if the new inputValue is the same as the current inputValue
+    // after calling `this.handlePrecision` with the new inputValue
     if (newState === this.state) {
       return;
     }
@@ -102,9 +100,9 @@ class NumericInput extends Component<void, Props, State> {
     });
   };
 
-  handlePrecision = (newState: State): State => {
+  handlePrecision = (inputValue: string): State => {
     const truncated: string = truncateInputValueToPrecision(
-      newState.inputValue,
+      inputValue,
       this.props.precision
     );
 
@@ -112,8 +110,10 @@ class NumericInput extends Component<void, Props, State> {
       return this.state;
     }
 
-    return { value: +truncated, inputValue: truncated };
-  }
+    return truncated === ''
+      ? { value: null, inputValue: '' }
+      : { value: +truncated, inputValue: truncated };
+  };
 
   render() {
     const { initialValue, ...passThroughProps } = this.props;
@@ -146,7 +146,9 @@ export class NumericInputDemo extends Component {
           initialValue={this.state.value}
           onChange={this.handleChange}
         />
-        <pre>state.value = {this.state.value}</pre>
+        <pre>
+          state.value = {JSON.stringify(this.state.value)}
+        </pre>
       </div>
     );
   }

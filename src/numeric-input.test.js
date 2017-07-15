@@ -192,6 +192,16 @@ describe('Components: Numeric Input', () => {
         inputValue: '72.1',
       });
     });
+
+    it('should use `null` as `value` when event value is an empty string', () => {
+      rendered.simulate('change', createInputEvent('1'));
+      rendered.simulate('change', createInputEvent(''));
+
+      expectResult(rendered).toEqual({
+        state: null,
+        inputValue: '',
+      });
+    });
   });
 
   describe('... handle precision (function)', () => {
