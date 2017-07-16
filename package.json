@@ -24,6 +24,7 @@
     "babel-preset-react": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
     "clean-webpack-plugin": "0.1.16",
+    "codecov": "^2.2.0",
     "css-loader": "0.28.4",
     "css-mqpacker": "6.0.1",
     "enzyme": "2.9.1",
