@@ -1,5 +1,7 @@
 # react-components
 
+[![codecov](https://codecov.io/gh/bhongy/react-components/branch/master/graph/badge.svg)](https://codecov.io/gh/bhongy/react-components)
+
 ### To view project locally.
 
 ```bash
