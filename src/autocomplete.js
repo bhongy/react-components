@@ -8,30 +8,44 @@
   Hit up/down arrow to move the highlighted item (selection)
   Hit enter to simulate submission of the selected item (see console)
   Clicking on the item <li> also submits the corresponding item
+
+  @flow
 */
 
 import React, { PureComponent } from 'react';
 // TODO: implement babel-plugin-lodash to avoid doing `import debounce from 'lodash/debounce'`
-import {
-  compact,
-  debounce,
-  findIndex,
-  flowRight,
-  get,
-  last,
-} from 'lodash';
+import { compact, debounce, findIndex, flowRight, get, last } from 'lodash';
 import s from './autocomplete.css';
 
-const KEY_CODE = {
+const KEY_CODE: { [key: string]: number } = {
   arrowUp: 38,
   arrowDown: 40,
   enter: 13,
+};
+
+// TODO: fix - eslint says `SyntheticInputEvent` is undefined but
+//   it doesn't have issue in `numeric-input.js` ¯\_(ツ)_/¯
+// eslint-disable-next-line no-undef
+type InputChangeEvent = SyntheticInputEvent & {
+  currentTarget: HTMLInputElement & { value: string, name?: string },
+};
+
+type Entry = {
+  id: string,
+  name: string,
 };
 
 // Use HOC rather than passing `props.endpoint` or `props.configuration`
 // so the data dependencies at initialization time (config) and runtime (props) are clear
 function configureAutocomplete({ fetchData, debounceInterval }) {
   return class Autocomplete extends PureComponent {
+    input: HTMLInputElement;
+    state: {
+      results: Array<Entry>,
+      searchTerm: string,
+      selection: Entry,
+    };
+
     state = {
       results: [],
       searchTerm: '',
@@ -42,7 +56,7 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
     //   about fetching data and performance concerns are
     //   co-located at the initialization
     fetchData = debounceInterval > 0
-      ? debounce((searchTerm) => {
+      ? debounce((searchTerm: string): void => {
         fetchData(searchTerm).then((results) => {
           this.setState({
             results,
@@ -52,7 +66,7 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
       }, debounceInterval)
       : fetchData;
 
-    handleChange = (event) => {
+    handleChange = (event: InputChangeEvent) => {
       // TODO: productionize
       //   if event is `null` how it should fail here without crashing JS runtime
       const { value } = event.currentTarget;
@@ -69,12 +83,9 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
       document.removeEventListener('keyup', this.handleKeyup);
     };
 
-    handleKeyup = (event) => {
+    handleKeyup = (event: KeyboardEvent): void => {
       const { results, selection } = this.state;
-      const selectionIndex = findIndex(
-        results,
-        o => o.id === get(selection, 'id')
-      );
+      const selectionIndex = findIndex(results, o => o.id === get(selection, 'id'));
       const lastIndex = results.length - 1;
 
       // eslint-disable-next-line default-case
@@ -99,12 +110,12 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
       }
     };
 
-    submitSelection = (selection) => {
+    submitSelection = (selection: Entry) => {
       // eslint-disable-next-line no-console
       console.log(`%c Submit selection: ${selection.name}`, 'color: #ff69b4');
     };
 
-    refInput = (node) => {
+    refInput = (node: HTMLInputElement) => {
       this.input = node;
     };
 
@@ -136,7 +147,9 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
                     //   in each re-render
                     onClick={() => this.submitSelection(o)}
                   >
-                    <pre>{JSON.stringify(o, null, 2)}</pre>
+                    <pre>
+                      {JSON.stringify(o, null, 2)}
+                    </pre>
                   </li>
                 );
               })}
@@ -148,13 +161,13 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
 }
 
 // parse `id` inelegantly because the API does not provide it with the response
-function parseIdInelegantlyBecauseResponseDoesNotProvide(urlWithId) {
+function parseIdInelegantlyBecauseResponseDoesNotProvide(urlWithId: string): string {
   return flowRight([last, compact])(urlWithId.split('/'));
 }
 
 const ExampleAutocomplete = configureAutocomplete({
   debounceInterval: 360,
-  fetchData(searchTerm) {
+  fetchData(searchTerm: string) {
     if (!searchTerm) {
       return Promise.resolve([]);
     }

@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 import Autocomplete from './autocomplete';
 import NumericInputDemo from './numeric-input.demo';
