@@ -28,7 +28,7 @@ module.exports = {
         include: project.paths.src(),
         options: Object.assign(
           { babelrc: false },
-          require('./babel').production,
+          require('./babel').production
         ),
       },
       {

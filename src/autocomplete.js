@@ -73,7 +73,7 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
       const { results, selection } = this.state;
       const selectionIndex = findIndex(
         results,
-        o => o.id === get(selection, 'id'),
+        o => o.id === get(selection, 'id')
       );
       const lastIndex = results.length - 1;
 
@@ -161,14 +161,14 @@ const ExampleAutocomplete = configureAutocomplete({
 
     return fetch(
       // note: SWAPI limits 10,000 requests per day per IP
-      `http://swapi.co/api/people/?search=${encodeURIComponent(searchTerm)}`,
+      `http://swapi.co/api/people/?search=${encodeURIComponent(searchTerm)}`
     )
       .then(res => res.json())
       .then(data =>
         data.results.map(o => ({
           id: parseIdInelegantlyBecauseResponseDoesNotProvide(o.url),
           name: o.name,
-        })),
+        }))
       );
   },
 });

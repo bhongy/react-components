@@ -35,7 +35,7 @@ module.exports = {
             // enable caching for faster webpack rebuild
             cacheDirectory: true,
           },
-          require('./babel').development,
+          require('./babel').development
         ),
       },
       {

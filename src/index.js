@@ -10,7 +10,7 @@ const renderApp = () => {
     <AppContainer>
       <App />
     </AppContainer>,
-    rootElement,
+    rootElement
   );
 };
 

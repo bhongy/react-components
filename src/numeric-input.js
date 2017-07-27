@@ -42,7 +42,7 @@ function handleInitialValue(value: ?number): State {
 
 export function truncateInputValueToPrecision(
   inputValue: string,
-  precision?: number,
+  precision?: number
 ): string {
   if (
     typeof precision !== 'number' ||
@@ -104,7 +104,7 @@ class NumericInput extends Component<void, Props, State> {
   handlePrecision = (inputValue: string): State => {
     const truncated: string = truncateInputValueToPrecision(
       inputValue,
-      this.props.precision,
+      this.props.precision
     );
 
     if (this.state.inputValue === truncated) {

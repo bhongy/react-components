@@ -17,6 +17,19 @@
     }
   },
   "rules": {
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        // disable this because it's an invalid syntax
+        // otherwise it will cause an error
+        // when using without transpiling in `internal`
+        "functions": "never"
+      }
+    ],
     "global-require": 0,
     "flowtype/no-weak-types": "error",
     "react/jsx-filename-extension": [
