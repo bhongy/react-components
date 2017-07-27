@@ -1,6 +1,6 @@
 /* eslint-disable import/order */
 
-const project = require('./project')
+const project = require('./project');
 
 // the list of plugins used is intentionally limited
 // to force us to "compose" components rather than
@@ -51,11 +51,11 @@ exports.development = [
     // don't add flexbox prefix for legacy IE
     flexbox: 'no-2009',
   }),
-]
+];
 
 exports.production = exports.development.concat([
   // @media(s) are one the largest text chunk in CSS
   // group media queries in a module together
   // to reduce file size in production
   require('css-mqpacker')(),
-])
+]);

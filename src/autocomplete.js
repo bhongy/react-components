@@ -8,31 +8,44 @@
   Hit up/down arrow to move the highlighted item (selection)
   Hit enter to simulate submission of the selected item (see console)
   Clicking on the item <li> also submits the corresponding item
+
+  @flow
 */
 
 import React, { PureComponent } from 'react';
 // TODO: implement babel-plugin-lodash to avoid doing `import debounce from 'lodash/debounce'`
-import {
-  compact,
-  debounce,
-  find,
-  findIndex,
-  flowRight,
-  get,
-  last,
-} from 'lodash';
+import { compact, debounce, findIndex, flowRight, get, last } from 'lodash';
 import s from './autocomplete.css';
 
-const KEY_CODE = {
+const KEY_CODE: { [key: string]: number } = {
   arrowUp: 38,
   arrowDown: 40,
   enter: 13,
+};
+
+// TODO: fix - eslint says `SyntheticInputEvent` is undefined but
+//   it doesn't have issue in `numeric-input.js` ¯\_(ツ)_/¯
+// eslint-disable-next-line no-undef
+type InputChangeEvent = SyntheticInputEvent & {
+  currentTarget: HTMLInputElement & { value: string, name?: string },
+};
+
+type Entry = {
+  id: string,
+  name: string,
 };
 
 // Use HOC rather than passing `props.endpoint` or `props.configuration`
 // so the data dependencies at initialization time (config) and runtime (props) are clear
 function configureAutocomplete({ fetchData, debounceInterval }) {
   return class Autocomplete extends PureComponent {
+    input: HTMLInputElement;
+    state: {
+      results: Array<Entry>,
+      searchTerm: string,
+      selection: Entry,
+    };
+
     state = {
       results: [],
       searchTerm: '',
@@ -43,17 +56,17 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
     //   about fetching data and performance concerns are
     //   co-located at the initialization
     fetchData = debounceInterval > 0
-      ? debounce(searchTerm => {
-          fetchData(searchTerm).then(results => {
-            this.setState({
-              results,
-              selection: results[0],
-            });
+      ? debounce((searchTerm: string): void => {
+        fetchData(searchTerm).then((results) => {
+          this.setState({
+            results,
+            selection: results[0],
           });
-        }, debounceInterval)
+        });
+      }, debounceInterval)
       : fetchData;
 
-    handleChange = event => {
+    handleChange = (event: InputChangeEvent) => {
       // TODO: productionize
       //   if event is `null` how it should fail here without crashing JS runtime
       const { value } = event.currentTarget;
@@ -70,24 +83,24 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
       document.removeEventListener('keyup', this.handleKeyup);
     };
 
-    handleKeyup = event => {
+    handleKeyup = (event: KeyboardEvent): void => {
       const { results, selection } = this.state;
-      const selectionIndex = findIndex(
-        results,
-        o => o.id === get(selection, 'id')
-      );
+      const selectionIndex = findIndex(results, o => o.id === get(selection, 'id'));
       const lastIndex = results.length - 1;
 
+      // eslint-disable-next-line default-case
       switch (event.keyCode) {
         case KEY_CODE.arrowUp:
-          return this.setState({
+          this.setState({
             selection: results[Math.max(selectionIndex - 1, 0)],
           });
+          break;
 
         case KEY_CODE.arrowDown:
-          return this.setState({
+          this.setState({
             selection: results[Math.min(selectionIndex + 1, lastIndex)],
           });
+          break;
 
         case KEY_CODE.enter:
           if (selection) {
@@ -97,11 +110,14 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
       }
     };
 
-    submitSelection = selection => {
+    submitSelection = (selection: Entry) => {
+      // eslint-disable-next-line no-console
       console.log(`%c Submit selection: ${selection.name}`, 'color: #ff69b4');
     };
 
-    refInput = node => this.input = node;
+    refInput = (node: HTMLInputElement) => {
+      this.input = node;
+    };
 
     render() {
       const { results, searchTerm, selection } = this.state;
@@ -110,7 +126,7 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
         <div>
           <h3>Autocomplete</h3>
           <input
-            type='search'
+            type="search"
             onChange={this.handleChange}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
@@ -119,10 +135,11 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
           />
           {Array.isArray(results) &&
             <ul className={s.menu}>
-              {results.map(o => {
+              {results.map((o) => {
                 const isSelected = o.id === get(selection, 'id');
 
                 return (
+                  // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
                   <li
                     key={o.id}
                     className={isSelected ? s.menu_item__selected : s.menu_item}
@@ -130,7 +147,9 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
                     //   in each re-render
                     onClick={() => this.submitSelection(o)}
                   >
-                    <pre>{JSON.stringify(o, null, 2)}</pre>
+                    <pre>
+                      {JSON.stringify(o, null, 2)}
+                    </pre>
                   </li>
                 );
               })}
@@ -142,13 +161,13 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
 }
 
 // parse `id` inelegantly because the API does not provide it with the response
-function parseIdInelegantlyBecauseResponseDoesNotProvide(urlWithId) {
+function parseIdInelegantlyBecauseResponseDoesNotProvide(urlWithId: string): string {
   return flowRight([last, compact])(urlWithId.split('/'));
 }
 
 const ExampleAutocomplete = configureAutocomplete({
   debounceInterval: 360,
-  fetchData(searchTerm) {
+  fetchData(searchTerm: string) {
     if (!searchTerm) {
       return Promise.resolve([]);
     }

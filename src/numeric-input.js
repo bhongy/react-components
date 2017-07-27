@@ -40,15 +40,8 @@ function handleInitialValue(value: ?number): State {
   };
 }
 
-export function truncateInputValueToPrecision(
-  inputValue: string,
-  precision?: number
-): string {
-  if (
-    typeof precision !== 'number' ||
-    precision % 1 !== 0 ||
-    precision < 0
-  ) {
+export function truncateInputValueToPrecision(inputValue: string, precision?: number): string {
+  if (typeof precision !== 'number' || precision % 1 !== 0 || precision < 0) {
     // handle invalid `precision` param
     // ? should throw instead ?
     return inputValue;
@@ -102,10 +95,7 @@ class NumericInput extends Component<void, Props, State> {
   };
 
   handlePrecision = (inputValue: string): State => {
-    const truncated: string = truncateInputValueToPrecision(
-      inputValue,
-      this.props.precision
-    );
+    const truncated: string = truncateInputValueToPrecision(inputValue, this.props.precision);
 
     if (this.state.inputValue === truncated) {
       return this.state;
@@ -120,11 +110,7 @@ class NumericInput extends Component<void, Props, State> {
     const { initialValue, ...passThroughProps }: Props = this.props;
 
     return (
-      <input
-        {...passThroughProps}
-        onChange={this.handleChange}
-        value={this.state.inputValue}
-      />
+      <input {...passThroughProps} onChange={this.handleChange} value={this.state.inputValue} />
     );
   }
 }
