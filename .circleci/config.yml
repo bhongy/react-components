@@ -16,5 +16,6 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn flow check -- --show-all-errors
       - run: yarn test -- --bail --runInBand --coverage
       - run: yarn codecov
