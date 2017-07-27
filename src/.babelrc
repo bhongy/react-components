@@ -1,5 +1,5 @@
 /*
-  TEMPORARY HACK: only use to run tests with Jest
+  TEMPORARY HACK: this file is only use when running Jest
   ---
   Babel 7 provides clean, cross env API to handle environments
   as implemented in `config/babel.js`
