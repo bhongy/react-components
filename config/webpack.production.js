@@ -58,6 +58,12 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      beautify: false,
+      comments: false,
+      ie8: false,
+      // warnings: false,
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'manifest'],
     }),
