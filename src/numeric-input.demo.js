@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import NumericInput from './numeric-input';
 
@@ -8,8 +10,6 @@ class NumericInputDemo extends Component {
     this.setState({ value: args.value });
 
   render() {
-    const { value } = this.state;
-
     return (
       <div>
         <h3>NumericInput</h3>

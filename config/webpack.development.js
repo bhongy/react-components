@@ -1,6 +1,6 @@
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const project = require('./project')
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const project = require('./project');
 
 module.exports = {
   context: project.paths.src(),
@@ -35,7 +35,7 @@ module.exports = {
             // enable caching for faster webpack rebuild
             cacheDirectory: true,
           },
-          require('./babel').development
+          require('./babel').development,
         ),
       },
       {
@@ -93,4 +93,4 @@ module.exports = {
       template: project.paths.src('index.ejs'),
     }),
   ],
-}
+};

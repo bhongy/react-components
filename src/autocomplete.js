@@ -15,7 +15,6 @@ import React, { PureComponent } from 'react';
 import {
   compact,
   debounce,
-  find,
   findIndex,
   flowRight,
   get,
@@ -43,17 +42,17 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
     //   about fetching data and performance concerns are
     //   co-located at the initialization
     fetchData = debounceInterval > 0
-      ? debounce(searchTerm => {
-          fetchData(searchTerm).then(results => {
-            this.setState({
-              results,
-              selection: results[0],
-            });
+      ? debounce((searchTerm) => {
+        fetchData(searchTerm).then((results) => {
+          this.setState({
+            results,
+            selection: results[0],
           });
-        }, debounceInterval)
+        });
+      }, debounceInterval)
       : fetchData;
 
-    handleChange = event => {
+    handleChange = (event) => {
       // TODO: productionize
       //   if event is `null` how it should fail here without crashing JS runtime
       const { value } = event.currentTarget;
@@ -70,24 +69,27 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
       document.removeEventListener('keyup', this.handleKeyup);
     };
 
-    handleKeyup = event => {
+    handleKeyup = (event) => {
       const { results, selection } = this.state;
       const selectionIndex = findIndex(
         results,
-        o => o.id === get(selection, 'id')
+        o => o.id === get(selection, 'id'),
       );
       const lastIndex = results.length - 1;
 
+      // eslint-disable-next-line default-case
       switch (event.keyCode) {
         case KEY_CODE.arrowUp:
-          return this.setState({
+          this.setState({
             selection: results[Math.max(selectionIndex - 1, 0)],
           });
+          break;
 
         case KEY_CODE.arrowDown:
-          return this.setState({
+          this.setState({
             selection: results[Math.min(selectionIndex + 1, lastIndex)],
           });
+          break;
 
         case KEY_CODE.enter:
           if (selection) {
@@ -97,11 +99,14 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
       }
     };
 
-    submitSelection = selection => {
+    submitSelection = (selection) => {
+      // eslint-disable-next-line no-console
       console.log(`%c Submit selection: ${selection.name}`, 'color: #ff69b4');
     };
 
-    refInput = node => this.input = node;
+    refInput = (node) => {
+      this.input = node;
+    };
 
     render() {
       const { results, searchTerm, selection } = this.state;
@@ -110,7 +115,7 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
         <div>
           <h3>Autocomplete</h3>
           <input
-            type='search'
+            type="search"
             onChange={this.handleChange}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
@@ -119,10 +124,11 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
           />
           {Array.isArray(results) &&
             <ul className={s.menu}>
-              {results.map(o => {
+              {results.map((o) => {
                 const isSelected = o.id === get(selection, 'id');
 
                 return (
+                  // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
                   <li
                     key={o.id}
                     className={isSelected ? s.menu_item__selected : s.menu_item}
@@ -155,14 +161,14 @@ const ExampleAutocomplete = configureAutocomplete({
 
     return fetch(
       // note: SWAPI limits 10,000 requests per day per IP
-      `http://swapi.co/api/people/?search=${encodeURIComponent(searchTerm)}`
+      `http://swapi.co/api/people/?search=${encodeURIComponent(searchTerm)}`,
     )
       .then(res => res.json())
       .then(data =>
         data.results.map(o => ({
           id: parseIdInelegantlyBecauseResponseDoesNotProvide(o.url),
           name: o.name,
-        }))
+        })),
       );
   },
 });

@@ -1,9 +1,9 @@
-const webpack = require('webpack')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const project = require('./project')
+const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const InlineManifestWebpackPlugin = require('inline-manifest-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const project = require('./project');
 
 module.exports = {
   context: project.paths.src(),
@@ -28,7 +28,7 @@ module.exports = {
         include: project.paths.src(),
         options: Object.assign(
           { babelrc: false },
-          require('./babel').production
+          require('./babel').production,
         ),
       },
       {
@@ -87,4 +87,4 @@ module.exports = {
       name: 'webpackManifest',
     }),
   ],
-}
+};
