@@ -1,12 +1,24 @@
 {
   "parser": "babel-eslint",
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "plugin:flowtype/recommended"
+  ],
   "env": {
     "browser": true,
     "jest": true
   },
+  "plugins": [
+    "flowtype"
+  ],
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
+    }
+  },
   "rules": {
     "global-require": 0,
+    "flowtype/no-weak-types": "error",
     "react/jsx-filename-extension": [
       "error",
       {
@@ -16,8 +28,25 @@
         ]
       }
     ],
+    // copy of airbnb but add type-annotations
+    "react/sort-comp": [
+      "error",
+      {
+        "order": [
+          "type-annotations",
+          "static-methods",
+          "lifecycle",
+          "/^on.+$/",
+          "/^(get|set)(?!(InitialState$|DefaultProps$|ChildContext$)).+$/",
+          "everything-else",
+          "/^render.+$/",
+          "render"
+        ]
+      }
+    ],
     "import/no-extraneous-dependencies": [
-      "error", {
+      "error",
+      {
         // do not report error if matched
         "devDependencies": [
           "{config,internal}/**/*.js",
