@@ -10,6 +10,7 @@
     "start": "node internal/dev-server",
     "build": "webpack --config config/webpack.js --progress --env.production",
     "lint": "eslint '{config,internal,src}/**/*.js'",
+    "flow-coverage": "flow-coverage-report -i './src/**/*.js' -t html -t text",
     "test": "jest --config=config/jest.json"
   },
   "author": "Thanik Bhongbhibhat <bhongbhibhat@gmail.com>",
@@ -36,6 +37,7 @@
     "express": "4.15.3",
     "extract-text-webpack-plugin": "^3.0.0",
     "flow-bin": "^0.51.0",
+    "flow-coverage-report": "^0.3.0",
     "html-webpack-plugin": "^2.29.0",
     "inline-manifest-webpack-plugin": "3.0.1",
     "jest": "^20.0.4",
