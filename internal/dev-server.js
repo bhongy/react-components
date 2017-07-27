@@ -17,7 +17,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
 app.use(require('webpack-hot-middleware')(compiler))
 
 app.get('*', (req, res) => {
-  res.sendFile(project.paths.dist('index.html'))
+  res.sendFile(project.paths.build('index.html'))
 })
 
 const port = 8888

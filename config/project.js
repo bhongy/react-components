@@ -12,7 +12,7 @@ const root = path.resolve.bind(null, rootPath)
 exports.paths = {
   root,
   src: root.bind(null, 'src'),
-  dist: root.bind(null, 'dist'),
+  build: root.bind(null, 'build'),
 }
 
 /**
