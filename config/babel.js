@@ -18,7 +18,14 @@ const presets = [
 
 exports.development = {
   presets,
-  plugins: ['lodash', 'react-hot-loader/babel'],
+  plugins: [
+    'lodash',
+    'react-hot-loader/babel',
+    // add source filename and line number to JSX
+    // helpful for debuggin when an exception is thrown
+    // use in development only
+    'transform-react-jsx-source',
+  ],
 };
 
 exports.production = {
