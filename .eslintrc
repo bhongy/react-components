@@ -41,6 +41,8 @@
         ]
       }
     ],
+    // use flow
+    "react/prop-types": 0,
     // copy of airbnb but add type-annotations
     "react/sort-comp": [
       "error",

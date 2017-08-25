@@ -10,11 +10,6 @@
 
 import React, { Component } from 'react';
 
-// is there a way to declare this close to `handleChange` ?
-type InputChangeEvent = SyntheticInputEvent & {
-  currentTarget: HTMLInputElement & { value: string, name?: string },
-};
-
 type Props = {
   initialValue?: ?number,
   onChange?: (obj: { value: ?number, name?: string }) => void,
@@ -56,15 +51,13 @@ export function truncateInputValueToPrecision(inputValue: string, precision?: nu
   return [integer, decimals.slice(0, precision)].join('.');
 }
 
-class NumericInput extends Component<void, Props, State> {
-  state: State; // don't know why I need to do this together with Generics
-
+class NumericInput extends Component<Props, State> {
   constructor(props: Props): void {
     super(props);
     this.state = handleInitialValue(props.initialValue);
   }
 
-  handleChange = (event: InputChangeEvent): void => {
+  handleChange = (event: SyntheticInputEvent<HTMLInputElement>): void => {
     // create a copy of "name" value because React synthetic event is re-used
     // hence we cannot rely on the reference like `event.currentTarget.name`
     const { name, value: inputValue } = event.currentTarget;
