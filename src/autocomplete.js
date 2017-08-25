@@ -13,7 +13,6 @@
 */
 
 import React, { PureComponent } from 'react';
-// TODO: implement babel-plugin-lodash to avoid doing `import debounce from 'lodash/debounce'`
 import { compact, debounce, findIndex, flowRight, get, last } from 'lodash';
 import s from './autocomplete.css';
 
@@ -23,29 +22,22 @@ const KEY_CODE: { [key: string]: number } = {
   enter: 13,
 };
 
-// TODO: fix - eslint says `SyntheticInputEvent` is undefined but
-//   it doesn't have issue in `numeric-input.js` ¯\_(ツ)_/¯
-// eslint-disable-next-line no-undef
-type InputChangeEvent = SyntheticInputEvent & {
-  currentTarget: HTMLInputElement & { value: string, name?: string },
-};
-
 type Entry = {
   id: string,
   name: string,
 };
 
+type State = {
+  results: Array<Entry>,
+  searchTerm: string,
+  selection: ?Entry,
+};
+
 // Use HOC rather than passing `props.endpoint` or `props.configuration`
 // so the data dependencies at initialization time (config) and runtime (props) are clear
 function configureAutocomplete({ fetchData, debounceInterval }) {
-  return class Autocomplete extends PureComponent {
+  return class Autocomplete extends PureComponent<*, State> {
     input: HTMLInputElement;
-    state: {
-      results: Array<Entry>,
-      searchTerm: string,
-      selection: Entry,
-    };
-
     state = {
       results: [],
       searchTerm: '',
@@ -66,7 +58,10 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
       }, debounceInterval)
       : fetchData;
 
-    handleChange = (event: InputChangeEvent) => {
+    // eslint-plugin-flowtype should handle this - probably not up-to-date
+    // with flow 0.53 yet
+    // eslint-disable-next-line no-undef
+    handleChange = (event: SyntheticInputEvent<HTMLInputElement>) => {
       // TODO: productionize
       //   if event is `null` how it should fail here without crashing JS runtime
       const { value } = event.currentTarget;
@@ -130,6 +125,7 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
             onChange={this.handleChange}
             onFocus={this.handleFocus}
             onBlur={this.handleBlur}
+            // $FlowFixMe
             ref={this.refInput}
             value={searchTerm}
           />

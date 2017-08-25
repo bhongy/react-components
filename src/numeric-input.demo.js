@@ -3,8 +3,10 @@
 import React, { Component } from 'react';
 import NumericInput from './numeric-input';
 
-class NumericInputDemo extends Component {
-  state: { value: ?number } = { value: 3.141593 };
+type State = { value: ?number };
+
+class NumericInputDemo extends Component<*, State> {
+  state = { value: 3.141593 };
 
   handleChange = (args: { value: ?number }): void =>
     this.setState({ value: args.value });
