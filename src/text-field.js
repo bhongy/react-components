@@ -1,8 +1,15 @@
 // @flow
 
 /*
+Features:
+  - support "controlled" input only (require `props.value` and `props.onChange`)
+  - support custom styling with global CSS or CSS modules
+*/
+
+/*
 TODO:
   - autofocus: how to handle multiple elements on page with autofocus={true} ?
+  - support css-in-js style API
 */
 
 import React from 'react';
@@ -23,42 +30,70 @@ type State = {
   hasFocus: boolean,
 };
 
+type ClassName = string;
+type StateToClassNames = (
+  state: State & { hasValue: boolean }
+) => {
+  container: ClassName,
+  label: ClassName,
+  input: ClassName,
+};
+
 const mapPropsToInput = (props: Props) => omit(props, ['label', 'onBlur', 'onFocus']);
-class TextField extends React.PureComponent<Props, State> {
-  static defaultProps = {
-    onBlur: noop,
-    onFocus: noop,
+function factory(mapStateToClassNames: StateToClassNames) {
+  return class TextField extends React.PureComponent<Props, State> {
+    static defaultProps = {
+      onBlur: noop,
+      onFocus: noop,
+    };
+
+    state = {
+      hasFocus: false,
+    };
+
+    id: string = uniqueId('TextFieldId_');
+
+    handleInputBlur: EventHandler = (event) => {
+      this.setState({ hasFocus: false });
+      this.props.onBlur(event);
+    };
+
+    handleInputFocus: EventHandler = (event) => {
+      this.setState({ hasFocus: true });
+      this.props.onFocus(event);
+    };
+
+    render() {
+      const { id, props, state } = this;
+      const hasValue = typeof props.value === 'string' && props.value.length > 0;
+      const style = mapStateToClassNames({
+        hasFocus: state.hasFocus,
+        hasValue,
+        // error: state.error,
+      });
+
+      return (
+        <div className={style.container}>
+          <label className={style.label} htmlFor={id}>
+            {props.label}
+          </label>
+          <input
+            {...mapPropsToInput(props)}
+            className={style.input}
+            id={id}
+            onBlur={this.handleInputBlur}
+            onFocus={this.handleInputFocus}
+          />
+        </div>
+      );
+    }
   };
-
-  id: string = uniqueId('TextFieldId_');
-
-  handleInputBlur: EventHandler = (event) => {
-    this.setState({ hasFocus: false });
-    this.props.onBlur(event);
-  };
-
-  handleInputFocus: EventHandler = (event) => {
-    this.setState({ hasFocus: false });
-    this.props.onFocus(event);
-  };
-
-  render() {
-    const { id, props, state } = this;
-
-    return (
-      <div className={state.hasFocus && 'has-focus'}>
-        <label htmlFor={id}>
-          {props.label}
-        </label>
-        <input
-          {...mapPropsToInput(props)}
-          id={id}
-          onBlur={this.handleInputBlur}
-          onFocus={this.handleInputFocus}
-        />
-      </div>
-    );
-  }
 }
 
-export default TextField;
+const defaultTheme: StateToClassNames = ({ hasFocus, hasValue }) =>
+  (hasFocus && hasValue
+    ? { container: '**container**', label: '**label**', input: '**input**' }
+    : { container: 'container', label: 'label', input: 'input' });
+
+export default factory(defaultTheme);
+export { factory as customizeTextField };
