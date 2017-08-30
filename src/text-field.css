@@ -1,0 +1,122 @@
+// https://material.io/guidelines/style/color.html#color-color-palette
+$primary-color: #2962ff; // Blue @ A700
+
+$opacity-light: 0.42;
+$opacity-medium: 0.54;
+$opacity-bold: 0.87;
+
+$spacing: 0.5em;
+$top-spacing: 1em;
+$text-field-height: 2em;
+
+/*
+TODO:
+  - fine-tune animation, asymmetry enter/exit duration & easing
+*/
+
+.container {
+  /* customize size with the font-size since spacing is in "em" */
+  // font-size: 1.25rem;
+  position: relative;
+  padding-top: $top-spacing;
+}
+
+.label {
+  position: absolute;
+  top: $top-spacing;
+  left: 0;
+
+  display: flex; // to align text vertically center
+  align-items: center;
+  width: 100%; // needed even with "display: block"
+  height: $text-field-height;
+
+  color: black;
+  opacity: $opacity-medium;
+  transform: scale(1) translateY(0);
+  transform-origin: left top;
+  will-change: color, opacity, transform;
+  transition-property: color, opacity, transform;
+  transition-duration: $duration-standard;
+  transition-timing-function: $easing-standard;
+}
+
+.label__move {
+  transform: scale(0.75) translateY(-1.5em);
+}
+
+.label__color {
+  color: $primary-color;
+  opacity: $opacity-bold;
+}
+
+.input {
+  // reset
+  font-size: inherit;
+  border: 0;
+  padding: 0;
+  outline: none;
+
+  display: block;
+  width: 100%; // needed even with "display: block"
+  height: $text-field-height;
+  background-color: transparent;
+  // use rgba instead of opacity to avoid
+  // compounding faded opacity on placeholder
+  color: rgba(0, 0, 0, $opacity-bold);
+  caret-color: $primary-color;
+
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity $duration-fast $easing-standard;
+
+  &::placeholder {
+    color: rgba(0, 0, 0, $opacity-light);
+  }
+}
+
+.input__show {
+  opacity: 1;
+}
+
+.border {
+  // reset
+  box-sizing: content-box;
+  height: 0;
+  margin: 0;
+  border: 0;
+
+  display: block;
+  width: 100%;
+
+  border-bottom: 1px solid black;
+  opacity: $opacity-light;
+  transform: scaleY(1);
+  will-change: border-color, opacity, transform;
+  transition-property: border-color, opacity, transform;
+  transition-duration: $duration-fast;
+  transition-timing-function: $easing-standard;
+}
+
+.container:hover {
+  & .border {
+    opacity: 0.87;
+    transform: scaleY(2);
+  }
+}
+
+.border__color {
+  border-color: $primary-color;
+  opacity: 1;
+  transform: scaleY(2);
+}
+
+.helperText {
+  // reset
+  margin: 0;
+
+  margin-top: $spacing;
+  font-size: 0.75em;
+  color: black;
+  opacity: $opacity-medium;
+}

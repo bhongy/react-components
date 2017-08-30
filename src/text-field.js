@@ -8,19 +8,27 @@ Features:
 
 /*
 TODO:
+  - disable state
+  - error state
+  - multiple-lines
+  - icon (left)
+  - action icon/text (right - e.g. clear button, dropdown icon)
   - autofocus: how to handle multiple elements on page with autofocus={true} ?
   - support css-in-js style API
 */
 
 import React from 'react';
 import { noop, omit, uniqueId } from 'lodash';
+import classnames from 'classnames';
+import s from './text-field.css';
 
 type InputEvent = SyntheticInputEvent<HTMLInputElement>;
-type EventHandler = (event: InputEvent) => void;
+export type EventHandler = (event: InputEvent) => void;
 
 type Props = {
   label: string,
   value: string,
+  helperText?: string,
   onBlur: EventHandler,
   onChange: EventHandler,
   onFocus: EventHandler,
@@ -37,9 +45,12 @@ type StateToClassNames = (
   container: ClassName,
   label: ClassName,
   input: ClassName,
+  border: ClassName,
+  helperText?: ClassName,
 };
 
-const mapPropsToInput = (props: Props) => omit(props, ['label', 'onBlur', 'onFocus']);
+const mapPropsToInput = (props: Props) => omit(props, ['label', 'helperText', 'onBlur', 'onFocus']);
+
 function factory(mapStateToClassNames: StateToClassNames) {
   return class TextField extends React.PureComponent<Props, State> {
     static defaultProps = {
@@ -69,7 +80,7 @@ function factory(mapStateToClassNames: StateToClassNames) {
       const style = mapStateToClassNames({
         hasFocus: state.hasFocus,
         hasValue,
-        // error: state.error,
+        // error: state.errorMessage,
       });
 
       return (
@@ -84,16 +95,38 @@ function factory(mapStateToClassNames: StateToClassNames) {
             onBlur={this.handleInputBlur}
             onFocus={this.handleInputFocus}
           />
+          <hr className={style.border} />
+          {props.helperText &&
+            <p className={style.helperText}>
+              {props.helperText}
+            </p>}
         </div>
       );
     }
   };
 }
 
-const defaultTheme: StateToClassNames = ({ hasFocus, hasValue }) =>
-  (hasFocus && hasValue
-    ? { container: '**container**', label: '**label**', input: '**input**' }
-    : { container: 'container', label: 'label', input: 'input' });
+/*
+TODO: better handle (design) conditional styling based on state
+  ---
+  e.g. always apply "move" style on label based on filled state
+  but if disabled or error - ignore "focus (color)" state
+  and focus also use (compose) "move" style
+*/
+const defaultTheme: StateToClassNames = ({ hasFocus, hasValue }) => ({
+  container: s.container,
+  label: classnames(s.label, {
+    [s.label__move]: hasFocus || hasValue,
+    [s.label__color]: hasFocus,
+  }),
+  input: classnames(s.input, {
+    [s.input__show]: hasFocus || hasValue,
+  }),
+  border: classnames(s.border, {
+    [s.border__color]: hasFocus,
+  }),
+  helperText: s.helperText,
+});
 
 export default factory(defaultTheme);
 export { factory as customizeTextField };
