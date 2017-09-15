@@ -163,7 +163,7 @@ function parseIdInelegantlyBecauseResponseDoesNotProvide(urlWithId: string): str
 
 const ExampleAutocomplete = configureAutocomplete({
   debounceInterval: 360,
-  fetchData(searchTerm: string) {
+  fetchData(searchTerm: string): Promise<Entry[]> {
     if (!searchTerm) {
       return Promise.resolve([]);
     }
