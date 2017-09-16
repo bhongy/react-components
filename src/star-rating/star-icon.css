@@ -1,0 +1,44 @@
+$primary-color: #ff4081; // Material Pink A200
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.empty {
+  fill: #ddd;
+}
+
+.filled {
+  fill: $primary-color;
+}
+
+.icon__empty {
+  composes: icon empty;
+}
+
+.icon__filled {
+  composes: icon filled;
+}
+
+.icon__partial {
+  composes: icon;
+  position: relative;
+}
+
+.glyph {
+  height: 1rem;
+}
+
+.glyph__empty {
+  composes: glyph empty;
+  width: 1rem;
+}
+
+.glyph__filled {
+  composes: glyph filled;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
