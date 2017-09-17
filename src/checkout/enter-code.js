@@ -1,6 +1,6 @@
 import React from 'react';
-import TextField from '../text-field';
-import { RaisedButton as Button } from '../buttons';
+import TextField from '../components/text-field';
+import { RaisedButton as Button } from '../components/buttons';
 import s from './enter-code.css';
 
 class EnterCode extends React.PureComponent {

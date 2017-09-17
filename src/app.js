@@ -3,7 +3,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import Header from './header';
-import ComponentsDemo from './components-demo-entry';
+import ComponentsDemo from './components';
 import CheckoutDemo from './checkout';
 import s from './app.css';
 
