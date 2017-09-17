@@ -60,6 +60,7 @@
     "classnames": "^2.2.5",
     "lodash": "4.17.4",
     "normalize.css": "^7.0.0",
+    "postcss-color-function": "^4.0.0",
     "react": "15.6.1",
     "react-dom": "15.6.1",
     "react-hot-loader": "next",

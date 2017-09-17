@@ -1,5 +1,5 @@
 $dark-background: #263238;
-$dark-content: rgba(255,255,255,0.87);
+$dark-content: rgba(255, 255, 255, $opacity-bold);
 $accent: #ff4081;
 
 .header {
@@ -11,7 +11,11 @@ $accent: #ff4081;
   justify-content: flex-end;
   max-width: 40rem;
   margin: 0 auto;
-  padding: 1rem 0;
+  padding: 1rem 1.25rem;
+
+  @media screen and (max-width: 25rem) {
+    justify-content: initial;
+  }
 }
 
 .contentItem {
@@ -21,7 +25,7 @@ $accent: #ff4081;
 
 .label {
   composes: contentItem;
-  opacity: 0.5;
+  opacity: $opacity-light;
 }
 
 .navLink {
@@ -29,7 +33,7 @@ $accent: #ff4081;
   text-decoration: none;
 
   &:hover {
-    opacity: 0.87;
+    opacity: $opacity-bold;
   }
 }
 

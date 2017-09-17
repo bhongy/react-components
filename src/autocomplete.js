@@ -121,6 +121,7 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
         <div>
           <h3>Autocomplete</h3>
           <input
+            className={s.input}
             type="search"
             onChange={this.handleChange}
             onFocus={this.handleFocus}
