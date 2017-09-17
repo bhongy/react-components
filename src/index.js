@@ -4,13 +4,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 // AppContainer is a necessary wrapper component for HMR
 import { AppContainer } from 'react-hot-loader';
+import { BrowserRouter as Router } from 'react-router-dom';
+import 'normalize.css';
+
 import App from './app';
 
 const rootElement = document.getElementById('react-root');
 const renderApp = () => {
   ReactDOM.render(
     <AppContainer>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </AppContainer>,
     rootElement
   );

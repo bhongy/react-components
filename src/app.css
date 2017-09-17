@@ -1,3 +1,8 @@
 .app {
   font-family: system-ui;
 }
+
+.content {
+  max-width: 40rem;
+  margin: 0 auto;
+}

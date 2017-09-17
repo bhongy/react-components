@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react';
-import 'normalize.css';
+import Header from './header';
 import AutocompleteDemo from './autocomplete';
 import NumericInputDemo from './numeric-input.demo';
 import StarRatingDemo from './star-rating';
@@ -10,10 +10,13 @@ import s from './app.css';
 
 const App = () => (
   <div className={s.app}>
-    <AutocompleteDemo />
-    <NumericInputDemo />
-    <StarRatingDemo />
-    <TextFieldDemo />
+    <Header />
+    <section className={s.content}>
+      <AutocompleteDemo />
+      <NumericInputDemo />
+      <StarRatingDemo />
+      <TextFieldDemo />
+    </section>
   </div>
 );
 

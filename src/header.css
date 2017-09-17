@@ -1,0 +1,38 @@
+$dark-background: #263238;
+$dark-content: rgba(255,255,255,0.87);
+$accent: #ff4081;
+
+.header {
+  background-color: $dark-background;
+}
+
+.content {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.contentItem {
+  margin-right: 1rem;
+  color: $dark-content;
+}
+
+.label {
+  composes: contentItem;
+  opacity: 0.5;
+}
+
+.navLink {
+  composes: contentItem;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.87;
+  }
+}
+
+.navLink__active {
+  color: $accent;
+}
