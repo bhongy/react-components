@@ -1,0 +1,22 @@
+.base {
+  border: none;
+  min-width: 5rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.raised {
+  composes: base;
+  border-radius: 0.25rem;
+  box-shadow: 0 3px 6px color(black alpha(0.15));
+}
+
+.primary {
+  background-color: #303f9f;
+  color: white;
+}
+
+.flat {
+  composes: base;
+}

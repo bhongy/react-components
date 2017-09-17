@@ -1,0 +1,18 @@
+.page {
+  display: flex;
+  align-items: center;
+}
+
+.form {
+  max-width: 30rem;
+  margin: 0 auto;
+  margin-top: 25vh;
+}
+
+.inputContainer {
+  margin-bottom: 2rem;
+}
+
+.buttonContainer {
+  text-align: center;
+}

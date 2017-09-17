@@ -1,5 +1,5 @@
 $dark-background: #263238;
-$dark-content: rgba(255, 255, 255, $opacity-bold);
+$dark-content: color(white alpha($opacity-bold));
 $accent: #ff4081;
 
 .header {
