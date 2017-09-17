@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import 'normalize.css';
 import AutocompleteDemo from './autocomplete';
 import NumericInputDemo from './numeric-input.demo';
 import StarRatingDemo from './star-rating';
