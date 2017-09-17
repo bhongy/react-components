@@ -1,21 +1,18 @@
 // @flow
 
 import React from 'react';
+import { Route } from 'react-router-dom';
 import Header from './header';
-import AutocompleteDemo from './autocomplete';
-import NumericInputDemo from './numeric-input.demo';
-import StarRatingDemo from './star-rating';
-import TextFieldDemo from './text-field.demo';
+import ComponentsDemo from './components-demo-entry';
+import CheckoutDemo from './checkout-demo-entry';
 import s from './app.css';
 
 const App = () => (
   <div className={s.app}>
     <Header />
     <section className={s.content}>
-      <AutocompleteDemo />
-      <NumericInputDemo />
-      <StarRatingDemo />
-      <TextFieldDemo />
+      <Route exact path="/" component={ComponentsDemo}/>
+      <Route path="/checkout" component={CheckoutDemo}/>
     </section>
   </div>
 );
