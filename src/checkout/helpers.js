@@ -11,3 +11,7 @@ export function joinPathname(paths: string[]): string {
     // handle multiple slashes e.g. "//path-to-something"
     .replace(/\/+/g, '/');
 }
+
+// function applyRestriction(restrictionCode, restrictionPolicy) {
+//   return {};
+// }

@@ -16,6 +16,8 @@ export const checkOfferCode = code => (dispatch) => {
       if (code === VALID_CODE) {
         const data = {
           code,
+          discount: 0.3, // 30%
+          restriction: null, // only domestic or international, etc.
           expiration: null, // never expires
         };
         resolve(data);
@@ -32,3 +34,13 @@ export const checkOfferCode = code => (dispatch) => {
     }
   );
 };
+
+export const CHOOSE_CONTINENT = 'CHOOSE_CONTINENT';
+export function chooseContinent(continent) {
+  return { type: CHOOSE_CONTINENT, payload: continent };
+}
+
+export const CHOOSE_DESTINATION = 'CHOOSE_DESTINATION';
+export function chooseDestination(destination) {
+  return { type: CHOOSE_DESTINATION, payload: destination };
+}

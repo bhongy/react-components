@@ -5,19 +5,17 @@ import { actions } from './store';
 import { joinPathname } from './helpers';
 import Spinner from './spinner';
 import InvalidCode from './invalid-code';
+import Start from './start';
+import ChooseContinent from './choose-continent';
+import ChooseDestination from './choose-destination';
 import s from './offer.css';
 
-const Start = () => <p>Good to go</p>;
+const isReady = props => props.data || props.error;
 class Offer extends React.PureComponent {
-  state = {
-    isReady: false,
-  };
-
   componentDidMount() {
     const { submitCode, match, history } = this.props;
     const { offerCode } = match.params;
     submitCode(offerCode).then(() => {
-      this.setState({ isReady: true });
       // don't destructure `this.props.error` we need the value
       // at the time the callback is called
       const result = this.props.error ? 'invalid-code' : 'start';
@@ -28,9 +26,8 @@ class Offer extends React.PureComponent {
 
   render() {
     const { match } = this.props;
-    const { isReady } = this.state;
 
-    if (!isReady) {
+    if (!isReady(this.props)) {
       return (
         <article className={s.spinnerContainer}>
           <Spinner />
@@ -42,6 +39,8 @@ class Offer extends React.PureComponent {
       <article>
         <Route path={`${match.url}/invalid-code`} component={InvalidCode} />
         <Route path={`${match.url}/start`} component={Start} />
+        <Route path={`${match.url}/choose-continent`} component={ChooseContinent} />
+        <Route path={`${match.url}/choose-destination`} component={ChooseDestination} />
       </article>
     );
   }

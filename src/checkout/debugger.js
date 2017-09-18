@@ -4,7 +4,7 @@ import s from './debugger.css';
 
 const Debugger = ({ applicationState }) => (
   <div className={s.container}>
-    <pre>{JSON.stringify(applicationState, null, 2)}</pre>
+    <pre>appState = {JSON.stringify(applicationState, null, 2)}</pre>
   </div>
 );
 

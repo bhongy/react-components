@@ -14,3 +14,14 @@ export const RaisedButton = ({ className, disabled, ...otherProps }) => {
     />
   );
 };
+
+export const FlatButton = ({ className, disabled, ...otherProps }) => {
+  const baseClassName = disabled ? s.flat__disabled : s.flat;
+  return (
+    <button
+      {...otherProps}
+      disabled={disabled}
+      className={cx(baseClassName, className)}
+    />
+  );
+};

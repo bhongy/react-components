@@ -5,9 +5,15 @@ import { get, invoke, memoize } from 'lodash';
 
 import InvalidCode from './invalid-code';
 
-const ENTRY = 'ENTRY';
-const VALID_CODE_START = 'VALID_CODE_START';
-const INVALID_CODE = 'INVALID_CODE';
+// these maps to location param
+const ENTRY = 'enter-code';
+const CHOOSE_TRIP_TYPE = 'start';
+const CHOOSE_CONTINENT = 'choose-continent';
+const CHOOSE_DESTINATION = 'choose-destination';
+const CHOOSE_FLIGHT = 'choose-flight';
+const REVIEW_ORDER = 'review';
+const CONFIRM_ORDER = 'confirm';
+const INVALID_CODE = 'invalid-code';
 
 type AppState = {};
 type StepKey = string; /* CHECKOUT | INVALID_CODE ... */
@@ -19,12 +25,14 @@ const isCodeValid = state => get(state, 'data.code') === '37b1f90e03';
 const checkoutFlowDefinition = {
   [ENTRY]: {
     next(state) {
-      return isCodeValid(state) ? VALID_CODE_START : INVALID_CODE;
+      return isCodeValid(state) ? CHOOSE_TRIP_TYPE : INVALID_CODE;
     },
   },
 
-  [VALID_CODE_START]: {
-    next: () => null,
+  [CHOOSE_TRIP_TYPE]: {
+    next(state) {
+      return state.type = 'international' ?
+    },
   },
 
   [INVALID_CODE]: {

@@ -4,6 +4,10 @@
   padding: 0.5rem 1rem;
   cursor: pointer;
   text-transform: uppercase;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .raised {
@@ -30,4 +34,21 @@
 
 .flat {
   composes: base;
+  color: #303f9f;
+  background-color: transparent;
+  transition: box-shadow $duration-fast;
+
+  &:hover {
+    box-shadow: 0 3px 6px color(black alpha(0.05));
+  }
+}
+
+.flat__disabled {
+  composes: flat;
+  opacity: $opacity-light;
+  cursor: default;
+
+  &:hover {
+    box-shadow: none;
+  }
 }
