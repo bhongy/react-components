@@ -9,12 +9,23 @@
 .raised {
   composes: base;
   border-radius: 0.25rem;
+  transition-properties: background-color, box-shadow;
+  transition-duration: $duration-fast;
+}
+
+.raised__active {
+  composes: raised;
+  background-color: #303f9f;
+  color: white;
   box-shadow: 0 3px 6px color(black alpha(0.15));
 }
 
-.primary {
-  background-color: #303f9f;
+.raised__disabled {
+  composes: raised;
+  background-color: #ddd;
   color: white;
+  cursor: default;
+  box-shadow: 0 3px 6px color(black alpha(0));
 }
 
 .flat {

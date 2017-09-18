@@ -1,0 +1,16 @@
+.page {
+  max-width: 40rem;
+  margin: 0 auto;
+  margin-top: 25vh;
+  text-align: center;
+}
+
+.graphic {
+  font-size: 4rem;
+  color: #999;
+  margin-bottom: 2rem;
+}
+
+.caption {
+  color: #bbb;
+}
