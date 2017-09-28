@@ -3,6 +3,9 @@
   "moduleNameMapper": {
     "\\.css$": "identity-obj-proxy"
   },
+  "snapshotSerializers": [
+    "enzyme-to-json/serializer"
+  ],
   "setupFiles": [
     "<rootDir>/config/test-setup.js"
   ],
