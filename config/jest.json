@@ -1,8 +1,15 @@
 {
   "rootDir": "..",
-  "roots": ["<rootDir>/src"],
+  "moduleNameMapper": {
+    "\\.css$": "identity-obj-proxy"
+  },
+  "setupFiles": [
+    "<rootDir>/config/test-setup.js"
+  ],
   "testEnvironment": "node",
-  "testMatch": ["**/*.test.js"],
+  "testMatch": [
+    "<rootDir>/src/**/*.test.js"
+  ],
   "transform": {
     "^.+\\.js$": "babel-jest"
   }
