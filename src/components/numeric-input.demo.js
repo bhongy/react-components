@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import NumericInput from './numeric-input';
+import s from './numeric-input.demo.css';
 
 type State = { value: ?number };
 
@@ -16,6 +17,7 @@ class NumericInputDemo extends Component<*, State> {
       <div>
         <h3>NumericInput</h3>
         <NumericInput
+          className={s.input}
           initialValue={this.state.value}
           onChange={this.handleChange}
         />

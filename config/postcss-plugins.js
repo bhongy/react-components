@@ -37,6 +37,8 @@ exports.development = [
   require('postcss-advanced-variables')({
     variables: require('./css-variables'),
   }),
+  // allow using color($my-color modifier(value)) e.g. color($brand-blue, alpha(0.3))
+  require('postcss-color-function')(),
   // allow nesting selectors and at-rules
   require('postcss-nesting')(),
   // reduce result of calc(`expression`) when possible

@@ -1,0 +1,42 @@
+$dark-background: #263238;
+$dark-content: color(white alpha($opacity-bold));
+$accent: #ff4081;
+
+.header {
+  background-color: $dark-background;
+}
+
+.content {
+  display: flex;
+  justify-content: flex-end;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+
+  @media screen and (max-width: 25rem) {
+    justify-content: initial;
+  }
+}
+
+.contentItem {
+  margin-right: 1rem;
+  color: $dark-content;
+}
+
+.label {
+  composes: contentItem;
+  opacity: $opacity-light;
+}
+
+.navLink {
+  composes: contentItem;
+  text-decoration: none;
+
+  &:hover {
+    opacity: $opacity-bold;
+  }
+}
+
+.navLink__active {
+  color: $accent;
+}

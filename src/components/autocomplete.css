@@ -1,0 +1,26 @@
+// TODO: fix Webpack css-loader config to allow "composes"
+.input {
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+
+  &:focus {
+    outline: none;
+    border-color: color($primary-accent alpha($opacity-bold));
+  }
+}
+
+.menu {
+  list-style: none;
+  padding-left: 0;
+}
+
+.menu_item {
+  padding: 0.25rem 0.5rem;
+}
+
+.menu_item__selected {
+  composes: menu_item;
+  font-weight: bold;
+  background-color: #fafafa;
+}

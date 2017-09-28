@@ -1,3 +1,15 @@
 .app {
   font-family: system-ui;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  box-sizing: border-box;
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  flex-grow: 1;
+  width: 100%;
 }

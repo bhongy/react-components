@@ -1,0 +1,20 @@
+.container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 0;
+  // transform: translateZ(0);
+
+  background-color: #e4dcdc;
+  border-radius: 0.25rem;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  opacity: $opacity-medium;
+  will-change: opacity;
+  transition: opacity $duration-fast $easing-standard;
+
+  &:hover {
+    opacity: 1;
+  }
+}

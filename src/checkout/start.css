@@ -1,0 +1,50 @@
+.page {
+  margin-top: 25vh;
+}
+
+.optionsContainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.option {
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+}
+
+.option_iconContainer {
+  display: block;
+  width: 6rem;
+  height: 6rem;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  box-shadow: 0 3px 6px color(black alpha(0));
+  // not performant
+  transition: box-shadow $duration-fast $easing-standard;
+}
+
+.option_icon {
+  fill: #aaa;
+  transition: fill $duration-fast $easing-standard;
+}
+
+.option_label {
+  text-align: center;
+  color: #aaa;
+  transition: color $duration-fast $easing-standard;
+}
+
+.option:hover {
+  & .option_iconContainer {
+    box-shadow: 0 3px 6px color(black alpha(0.15));
+  }
+  & .option_icon {
+    fill: #303f9f;
+  }
+  & .option_label {
+    color: initial;
+  }
+}
