@@ -22,7 +22,7 @@ export const checkOfferCode = code => (dispatch) => {
         };
         resolve(data);
       } else {
-        reject('The offer code is invalid.');
+        reject(new Error('The offer code is invalid.'));
       }
     }, 3000);
   }).then(

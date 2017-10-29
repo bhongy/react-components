@@ -9,16 +9,18 @@ import 'normalize.css';
 import App from './app';
 
 const rootElement = document.getElementById('react-root');
-const renderApp = () => {
-  ReactDOM.render(
-    <AppContainer>
-      <Router>
-        <App />
-      </Router>
-    </AppContainer>,
-    rootElement
-  );
-};
+const renderApp = rootElement
+  ? () => {
+    ReactDOM.render(
+      <AppContainer>
+        <Router>
+          <App />
+        </Router>
+      </AppContainer>,
+      rootElement
+    );
+  }
+  : () => {}; // set renderApp to a noop if we don't have `rootElement`
 
 renderApp();
 

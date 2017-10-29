@@ -22,7 +22,7 @@ export type State = {
 };
 
 function handleInitialValue(value: ?number): State {
-  if (typeof value === 'number' && isFinite(value)) {
+  if (typeof value === 'number' && Number.isFinite(value)) {
     return {
       value,
       inputValue: value.toString(),
@@ -63,7 +63,7 @@ class NumericInput extends Component<Props, State> {
     const { name, value: inputValue } = event.currentTarget;
 
     // bail early (do not change state) if input is invalid
-    if (isNaN(+inputValue)) {
+    if (Number.isNaN(+inputValue)) {
       return;
     }
 

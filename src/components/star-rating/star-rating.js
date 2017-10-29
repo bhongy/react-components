@@ -61,9 +61,7 @@ function convertRatingToFillValues(rating: number, maxRating: number): number[] 
   const isInvalidRange = rating < 0 || rating > maxRating;
   if (__DEV__ && isInvalidRange) {
     // eslint-disable-next-line no-console
-    console.warn(
-      `[StarRating] rating is outside the valid range (0 to ${maxRating} inclusive). Received: ${rating}.`
-    );
+    console.warn(`[StarRating] rating is outside the valid range (0 to ${maxRating} inclusive). Received: ${rating}.`);
   }
 
   // No IE support for Array.prototype.fill
@@ -120,10 +118,7 @@ function customizeStarRating(config: Config) {
 
     render() {
       const { hoveredRating } = this.state;
-      const fillValues = convertRatingToFillValues(
-        hoveredRating || this.props.rating,
-        maxRating
-      );
+      const fillValues = convertRatingToFillValues(hoveredRating || this.props.rating, maxRating);
 
       return (
         <Wrapper>
