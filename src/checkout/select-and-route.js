@@ -9,7 +9,13 @@ class SelectAndRoute extends React.PureComponent {
 
   handleClick = (event) => {
     event.preventDefault();
-    const { history, match, next, dispatch, action } = this.props;
+    const {
+      history,
+      match,
+      next,
+      dispatch,
+      action,
+    } = this.props;
     const current = last(match.url.split('/'));
     history.push(match.url.replace(current, next));
 

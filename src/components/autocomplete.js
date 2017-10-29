@@ -130,10 +130,12 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
             ref={this.refInput}
             value={searchTerm}
           />
-          {Array.isArray(results) &&
+          {Array.isArray(results) && (
             <ul className={s.menu}>
               {results.map((o) => {
                 const isSelected = o.id === get(selection, 'id');
+                // TODO: change to a class so we can bound to prototype
+                const submit = () => this.submitSelection(o);
 
                 return (
                   // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
@@ -142,15 +144,15 @@ function configureAutocomplete({ fetchData, debounceInterval }) {
                     className={isSelected ? s.menu_item__selected : s.menu_item}
                     // TODO: for production, do not create new functions
                     //   in each re-render
-                    onClick={() => this.submitSelection(o)}
+                    onClick={submit}
+                    onKeyPress={submit}
                   >
-                    <pre>
-                      {JSON.stringify(o, null, 2)}
-                    </pre>
+                    <pre>{JSON.stringify(o, null, 2)}</pre>
                   </li>
                 );
               })}
-            </ul>}
+            </ul>
+          )}
         </div>
       );
     }
@@ -169,17 +171,14 @@ const ExampleAutocomplete = configureAutocomplete({
       return Promise.resolve([]);
     }
 
-    return fetch(
-      // note: SWAPI limits 10,000 requests per day per IP
-      `http://swapi.co/api/people/?search=${encodeURIComponent(searchTerm)}`
-    )
+    // note: SWAPI limits 10,000 requests per day per IP
+    return fetch(`http://swapi.co/api/people/?search=${encodeURIComponent(searchTerm)}`)
       .then(res => res.json())
       .then(data =>
         data.results.map(o => ({
           id: parseIdInelegantlyBecauseResponseDoesNotProvide(o.url),
           name: o.name,
-        }))
-      );
+        })));
   },
 });
 

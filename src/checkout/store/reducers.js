@@ -30,11 +30,24 @@ function rootReducer(state: AppState = initialState, action: Action): AppState {
     // TODO: separate "isFetching" flag from data, error handling
     //   by composing reducers
     case VALID_OFFER_CODE:
-      return { ...state, isFetching: false, data: payload, error: null };
+      return {
+        ...state,
+        isFetching: false,
+        data: payload,
+        error: null,
+      };
     case INVALID_OFFER_CODE:
-      return { ...state, isFetching: false, data: null, error: payload };
+      return {
+        ...state,
+        isFetching: false,
+        data: null,
+        error: payload,
+      };
     case CHOOSE_CONTINENT:
-      return { ...state, continent: payload };
+      return {
+        ...state,
+        continent: payload,
+      };
     case CHOOSE_DESTINATION:
       return { ...state, destination: payload };
     default:
