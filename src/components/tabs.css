@@ -1,0 +1,76 @@
+.controls_wrapper {
+  display: flex;
+}
+
+// Temporary: composes from different file currently doesn't work
+.buttonReset {
+	background: none;
+	border: 0;
+  display: inline-block;
+  margin: 0;
+	padding: 0;
+  vertical-align: middle;
+	white-space: normal;
+	line-height: 1;
+  -webkit-tap-highlight-color: transparent;  /* remove button highlight when tap */
+}
+
+.control {
+  composes: buttonReset;
+  flex: 1 1 0;
+  padding: 0.5rem 1rem;
+  color: #666;
+  background-color: #eee;
+  border: 3px solid #eee;
+  cursor: pointer;
+  text-align: center;
+  user-select: none;
+
+  // handle in component .control__first rather than CSS selector?
+  &:first-child {
+    border-radius: 3px 0 0 3px;
+  }
+
+  // handle in component .control__last rather than CSS selector?
+  &:last-child {
+    border-radius: 0 3px 3px 0;
+  }
+
+  &:hover,
+  &:focus {
+    color: initial;
+    outline: none;
+  }
+}
+
+.control__active {
+  composes: control;
+  color: initial;
+  background-color: white;
+}
+
+.panels_wrapper {
+  // position: relative;
+  overflow: hidden;
+}
+
+.panels_track {
+  display: flex;
+  background-color: white;
+  will-change: transform;
+}
+
+.panel {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem 0.5rem;
+  flex-shrink: 0;
+  // ensure inactive elements and their children do not receive focus
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/visibility
+  visibility: hidden;
+}
+
+.panel__active {
+  composes: panel;
+  visibility: visible;
+}
