@@ -1,5 +1,7 @@
 .controls_wrapper {
+  position: relative; // for indicator
   display: flex;
+  justify-content: center;
 }
 
 // Temporary: composes from different file currently doesn't work
@@ -17,36 +19,40 @@
 
 .control {
   composes: buttonReset;
+  box-sizing: border-box;
+  // use flex to vertically middle-align it's content with min-height
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex: 1 1 0;
   padding: 0.5rem 1rem;
+  max-width: 16.5rem;
+  min-height: 3rem;
   color: #666;
-  background-color: #eee;
-  border: 3px solid #eee;
+  background-color: white;
+  text-transform: uppercase;
   cursor: pointer;
-  text-align: center;
   user-select: none;
-
-  // handle in component .control__first rather than CSS selector?
-  &:first-child {
-    border-radius: 3px 0 0 3px;
-  }
-
-  // handle in component .control__last rather than CSS selector?
-  &:last-child {
-    border-radius: 0 3px 3px 0;
-  }
 
   &:hover,
   &:focus {
-    color: initial;
+    color: $primary-accent;
     outline: none;
   }
 }
 
 .control__active {
   composes: control;
-  color: initial;
-  background-color: white;
+  color: $primary-accent;
+}
+
+.control_indicator {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  height: 2px;
+  background-color: $primary-accent;
+  will-change: left, width;
 }
 
 .panels_wrapper {
@@ -63,7 +69,7 @@
 .panel {
   box-sizing: border-box;
   width: 100%;
-  padding: 1rem 0.5rem;
+  padding: 1rem 0;
   flex-shrink: 0;
   // ensure inactive elements and their children do not receive focus
   // https://developer.mozilla.org/en-US/docs/Web/CSS/visibility

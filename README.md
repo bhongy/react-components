@@ -12,6 +12,7 @@ Then open the browser at `http://localhost:8888`
 
 ### Table of Content
 - [x] [Text Field (Material Design)](https://material.io/guidelines/components/text-fields.html)
+- [x] [Tabs (Material Design)](https://material.io/guidelines/components/tabs.html)
 - [x] Numeric Input
 - [x] Autocomplete (Prototype, not production-ready)
 
