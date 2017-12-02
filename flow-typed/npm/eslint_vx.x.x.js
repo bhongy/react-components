@@ -1,4 +1,4 @@
-// flow-typed signature: 002a38af8024ec199d0956d427605aad
+// flow-typed signature: 24d91afe2b9b347641c4f5915accc45b
 // flow-typed version: <<STUB>>/eslint_v^4.6.1/flow_v0.57.3
 
 /**
@@ -383,6 +383,10 @@ declare module 'eslint/lib/rules/id-length' {
 }
 
 declare module 'eslint/lib/rules/id-match' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/rules/implicit-arrow-linebreak' {
   declare module.exports: any;
 }
 
@@ -1330,6 +1334,10 @@ declare module 'eslint/lib/util/module-resolver' {
   declare module.exports: any;
 }
 
+declare module 'eslint/lib/util/naming' {
+  declare module.exports: any;
+}
+
 declare module 'eslint/lib/util/node-event-generator' {
   declare module.exports: any;
 }
@@ -1647,6 +1655,9 @@ declare module 'eslint/lib/rules/id-length.js' {
 }
 declare module 'eslint/lib/rules/id-match.js' {
   declare module.exports: $Exports<'eslint/lib/rules/id-match'>;
+}
+declare module 'eslint/lib/rules/implicit-arrow-linebreak.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/implicit-arrow-linebreak'>;
 }
 declare module 'eslint/lib/rules/indent-legacy.js' {
   declare module.exports: $Exports<'eslint/lib/rules/indent-legacy'>;
@@ -2355,6 +2366,9 @@ declare module 'eslint/lib/util/keywords.js' {
 }
 declare module 'eslint/lib/util/module-resolver.js' {
   declare module.exports: $Exports<'eslint/lib/util/module-resolver'>;
+}
+declare module 'eslint/lib/util/naming.js' {
+  declare module.exports: $Exports<'eslint/lib/util/naming'>;
 }
 declare module 'eslint/lib/util/node-event-generator.js' {
   declare module.exports: $Exports<'eslint/lib/util/node-event-generator'>;

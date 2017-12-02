@@ -1,4 +1,4 @@
-// flow-typed signature: 0e61df8fc8cd344eebda95891ea25e65
+// flow-typed signature: b52f50b11a56921f6e30fdc996da0c16
 // flow-typed version: <<STUB>>/webpack-hot-middleware_v^2.19.1/flow_v0.57.3
 
 /**
@@ -30,14 +30,6 @@ declare module 'webpack-hot-middleware/client' {
   declare module.exports: any;
 }
 
-declare module 'webpack-hot-middleware/coverage/lcov-report/prettify' {
-  declare module.exports: any;
-}
-
-declare module 'webpack-hot-middleware/coverage/lcov-report/sorter' {
-  declare module.exports: any;
-}
-
 declare module 'webpack-hot-middleware/helpers' {
   declare module.exports: any;
 }
@@ -56,12 +48,6 @@ declare module 'webpack-hot-middleware/client-overlay.js' {
 }
 declare module 'webpack-hot-middleware/client.js' {
   declare module.exports: $Exports<'webpack-hot-middleware/client'>;
-}
-declare module 'webpack-hot-middleware/coverage/lcov-report/prettify.js' {
-  declare module.exports: $Exports<'webpack-hot-middleware/coverage/lcov-report/prettify'>;
-}
-declare module 'webpack-hot-middleware/coverage/lcov-report/sorter.js' {
-  declare module.exports: $Exports<'webpack-hot-middleware/coverage/lcov-report/sorter'>;
 }
 declare module 'webpack-hot-middleware/helpers.js' {
   declare module.exports: $Exports<'webpack-hot-middleware/helpers'>;
