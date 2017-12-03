@@ -4,5 +4,5 @@
 
 .bar {
   display: block;
-  background-color: red;
+  background-color: $primary-accent;
 }

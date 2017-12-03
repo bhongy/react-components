@@ -15,7 +15,9 @@ $material-design-card-box-shadow-elevation-2:
 
 .card {
   position: relative;
-  height: 2rem;
+  display: flex;
+  align-items: center;
+  height: 3rem;
   background-color: #eee;
   // border-radius: $material-design-border-radius;
   // box-shadow: $material-design-card-box-shadow-elevation-2;
@@ -27,5 +29,17 @@ $material-design-card-box-shadow-elevation-2:
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 10; // TEMPORARY
+  z-index: 5; // TEMPORARY
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5; // TEMPORARY
+}
+
+.button {
+  margin: 0 auto 2rem;
 }
