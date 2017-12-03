@@ -41,7 +41,7 @@ const PropTypes = {
 class LinearProgress extends React.PureComponent<Props, {}> {
   static propTypes = { percentCompleted: PropTypes.inRange(0, 1) };
   static defaultProps = {
-    height: 4,
+    height: 4, // I'd prefer this is a parameter via HoC
   };
 
   state = {};
@@ -52,11 +52,14 @@ class LinearProgress extends React.PureComponent<Props, {}> {
     const percentCompleted = Math.max(0, Math.min(1, this.props.percentCompleted));
     const transform = `scaleX(${percentCompleted})`;
     return (
-      <div className={s.container}>
-        <i className={s.bar} style={{ transform, height }} />
+      <div className={s.container} style={{ height }}>
+        <i className={s.bar} style={{ transform }} />
       </div>
     );
   }
 }
 
 export default LinearProgress;
+
+// export default configureLinearProgress;
+// export const DefaultLinearProgress = configureLinearProgress({ height: 4 });

@@ -9,10 +9,6 @@ $material-design-card-box-shadow-elevation-2:
   margin: 0 auto;
 }
 
-// .demo {
-//   margin-bottom: 1rem;
-// }
-
 .card {
   position: relative;
   display: flex;

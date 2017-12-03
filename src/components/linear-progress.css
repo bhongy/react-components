@@ -1,9 +1,10 @@
 .container {
-
+  overflow: hidden;
 }
 
 .bar {
   display: block;
+  height: 100%;
   background-color: $primary-accent;
   transform-origin: left;
 }
