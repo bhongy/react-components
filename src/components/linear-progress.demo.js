@@ -26,7 +26,7 @@ class SimpleUseCaseDemo extends React.PureComponent {
     this.intervalId = setInterval(() => {
       this.setState(prevState => {
         const { completeAt } = this.props;
-        const delta = Math.random() * (completeAt / 4);
+        const delta = Math.random() * (completeAt / 2);
         const nextValue = prevState.value + delta;
         if (nextValue < completeAt) {
           return { value: nextValue };
@@ -51,7 +51,7 @@ class SimpleUseCaseDemo extends React.PureComponent {
       <Fragment>
         <Card>
           <header className={s.header}>
-            <LinearProgress percentCompleted={100 * value / completeAt} />
+            <LinearProgress percentCompleted={value / completeAt} />
           </header>
         </Card>
         <Button className={s.button} onClick={this.startLoading}>
@@ -63,11 +63,11 @@ class SimpleUseCaseDemo extends React.PureComponent {
 }
 
 class LinearProgressDemo extends React.PureComponent {
-  state = { v: 160 };
+  state = { v: 1.60 };
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({ v: 230 });
+      this.setState({ v: 2.30 });
     }, 1000);
   }
 
@@ -85,7 +85,7 @@ class LinearProgressDemo extends React.PureComponent {
           </Card>
           <Card>
             <footer className={s.footer}>
-              <LinearProgress percentCompleted={35} />
+              <LinearProgress percentCompleted={0.35} />
             </footer>
           </Card>
         </div>
