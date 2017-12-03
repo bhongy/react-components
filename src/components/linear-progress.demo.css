@@ -1,4 +1,3 @@
-$material-design-border-radius: 2px;
 $material-design-card-box-shadow-elevation-2:
   0px 1px 5px 0px rgba(0, 0, 0, 0.2),
   0px 2px 2px 0px rgba(0, 0, 0, 0.14),
@@ -13,9 +12,8 @@ $material-design-card-box-shadow-elevation-2:
   position: relative;
   display: flex;
   align-items: center;
-  height: 3rem;
-  background-color: #eee;
-  // border-radius: $material-design-border-radius;
+  padding: 1.5rem 1rem;
+  background-color: #f3f3f3;
   // box-shadow: $material-design-card-box-shadow-elevation-2;
   margin-bottom: 1rem;
 }

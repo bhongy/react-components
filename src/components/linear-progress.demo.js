@@ -98,7 +98,7 @@ class LinearProgressDemo extends React.PureComponent {
             <header className={s.header}>
               <LinearProgress percentCompleted={this.state.v} />
             </header>
-            <p>Invalid proptype.</p>
+            <span>Invalid proptype.</span>
           </Card>
           <Card>
             <footer className={s.footer}>
