@@ -26,7 +26,7 @@ class SimpleUseCaseDemo extends React.PureComponent {
     this.intervalId = setInterval(() => {
       this.setState(prevState => {
         const { completeAt } = this.props;
-        const delta = Math.round(Math.random() * (completeAt / 4));
+        const delta = Math.random() * (completeAt / 4);
         const nextValue = prevState.value + delta;
         if (nextValue < completeAt) {
           return { value: nextValue };

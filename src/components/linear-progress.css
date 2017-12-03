@@ -5,4 +5,5 @@
 .bar {
   display: block;
   background-color: $primary-accent;
+  transform-origin: left;
 }

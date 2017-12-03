@@ -49,10 +49,11 @@ class LinearProgress extends React.PureComponent<Props, {}> {
   render() {
     const { height } = this.props;
     const percentCompleted = Math.max(0, Math.min(100, this.props.percentCompleted));
-    const width = `${percentCompleted}%`;
+    // const width = `${percentCompleted}%`;
+    const transform = `scaleX(${percentCompleted / 100})`;
     return (
       <div className={s.container}>
-        <i className={s.bar} style={{ width, height }} />
+        <i className={s.bar} style={{ transform, height }} />
       </div>
     );
   }
