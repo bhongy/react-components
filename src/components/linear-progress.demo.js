@@ -5,48 +5,58 @@ import s from './linear-progress.demo.css';
 
 const Card = ({ children }) => <div className={s.card}>{children}</div>;
 
-class SimpleUseCaseDemo extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.intervalId = null;
-    this.state = { isLoading: false, value: 0 };
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.intervalId);
-  }
-
-  startLoading = () => {
-    this.setState({ isLoading: true, value: 0 });
-
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-
-    this.intervalId = setInterval(() => {
-      this.setState(prevState => {
-        const { completeAt } = this.props;
-        const delta = Math.random() * (completeAt / 2);
-        const nextValue = prevState.value + delta;
-        if (nextValue < completeAt) {
-          return { value: nextValue };
-        }
-        return { value: 300, isLoading: false };
-      });
-    }, 600);
+const noop = () => {};
+class Interval extends React.PureComponent {
+  static defaultProps = {
+    onUnmount: noop,
   };
 
-  componentDidUpdate(_, prevState) {
-    if (prevState.isLoading && !this.state.isLoading) {
-      clearInterval(this.intervalId);
-      console.log('Done!');
-      // this.props.onLoadingDidEnd();
-    }
+  intervalId = null;
+
+  componentDidMount() {
+    const { callback, interval } = this.props;
+    this.intervalId = setInterval(callback, interval);
+  }
+
+  // TODO: check the timing of callback fire, unmount
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+    this.props.onUnmount();
   }
 
   render() {
+    return null;
+  }
+}
+
+class SimpleUseCaseDemo extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      value: props.completeAt * 0.25, // just to show a bit initially
+    };
+  }
+
+  handleLoading = () => {
+    this.setState((prevState) => {
+      const { completeAt } = this.props;
+      const delta = Math.random() * (completeAt / 2);
+      const nextValue = prevState.value + delta;
+      if (nextValue < completeAt) {
+        return { value: nextValue };
+      }
+      return { value: completeAt, isLoading: false };
+    });
+  };
+
+  handleButtonClick = () => {
+    this.setState({ isLoading: true, value: 0 });
+  };
+
+  render() {
     const { completeAt } = this.props;
-    const { value } = this.state;
+    const { isLoading, value } = this.state;
     return (
       <Fragment>
         <Card>
@@ -54,20 +64,27 @@ class SimpleUseCaseDemo extends React.PureComponent {
             <LinearProgress percentCompleted={value / completeAt} />
           </header>
         </Card>
-        <Button className={s.button} onClick={this.startLoading}>
+        <Button className={s.button} onClick={this.handleButtonClick}>
           Load
         </Button>
+        {isLoading &&
+          <Interval
+            callback={this.handleLoading}
+            interval={300}
+            onUnmount={() => console.log('Loading is done!')}
+          />
+        }
       </Fragment>
     );
   }
 }
 
 class LinearProgressDemo extends React.PureComponent {
-  state = { v: 1.60 };
+  state = { v: 1.6 };
 
   componentDidMount() {
     setTimeout(() => {
-      this.setState({ v: 2.30 });
+      this.setState({ v: 2.3 });
     }, 1000);
   }
 
