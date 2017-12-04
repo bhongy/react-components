@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Transition } from 'react-transition-group';
 import LinearProgress from './linear-progress';
 import { FlatButton as Button } from './buttons';
 import s from './linear-progress.demo.css';
@@ -29,6 +30,37 @@ class Interval extends React.PureComponent {
   }
 }
 
+class LinearProgressZwei extends React.PureComponent {
+  duration = 360;
+
+  defaultStyle = {
+    transition: `opacity ${this.duration}ms ease-in-out`,
+    opacity: 0,
+  };
+
+  transitionStyles = {
+    entered: { opacity: 1 },
+  };
+
+  render() {
+    const { isLoading, percentCompleted } = this.props;
+    return (
+      <Transition
+        in={isLoading}
+        timeout={this.duration}
+        mountOnEnter
+        unmountOnExit
+      >
+        {status => (
+          <div style={{ ...this.defaultStyle, ...this.transitionStyles[status] }}>
+            <LinearProgress percentCompleted={percentCompleted} />
+          </div>
+        )}
+      </Transition>
+    );
+  }
+}
+
 class SimpleUseCaseDemo extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -41,7 +73,7 @@ class SimpleUseCaseDemo extends React.PureComponent {
   handleLoading = () => {
     this.setState((prevState) => {
       const { completeAt } = this.props;
-      const delta = Math.random() * (completeAt / 2);
+      const delta = completeAt / 8;
       const nextValue = prevState.value + delta;
       if (nextValue < completeAt) {
         return { value: nextValue };
@@ -61,19 +93,19 @@ class SimpleUseCaseDemo extends React.PureComponent {
       <Fragment>
         <Card>
           <header className={s.header}>
-            <LinearProgress percentCompleted={value / completeAt} />
+            <LinearProgressZwei isLoading={isLoading} percentCompleted={value / completeAt} />
           </header>
         </Card>
         <Button className={s.button} onClick={this.handleButtonClick}>
           Load
         </Button>
-        {isLoading &&
+        {isLoading && (
           <Interval
             callback={this.handleLoading}
             interval={300}
             onUnmount={() => console.log('Loading is done!')}
           />
-        }
+        )}
       </Fragment>
     );
   }

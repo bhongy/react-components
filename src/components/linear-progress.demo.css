@@ -16,6 +16,7 @@ $material-design-card-box-shadow-elevation-2:
   background-color: #f3f3f3;
   // box-shadow: $material-design-card-box-shadow-elevation-2;
   margin-bottom: 1rem;
+  overflow: hidden;
 }
 
 .header {

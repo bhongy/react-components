@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import { once } from 'lodash';
-// import { Motion, spring } from 'react-motion';
 import s from './linear-progress.css';
 
 // class ProgressFill extends React.PureComponent<*, *> {
