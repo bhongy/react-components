@@ -1,4 +1,37 @@
-// Place your settings in this file to overwrite default and user settings.
 {
-  "flow.useNPMPackagedFlow": true
+  // from: https://gist.github.com/bhongy/ca8f10438b21789278809f9c951bc37a
+
+  /*
+  Suggested VSCode Extensions
+    - mgmcdermott.vscode-language-babel
+    - dbaeumer.vscode-eslint
+    - flowtype.flow-for-vscode
+    - esbenp.prettier-vscode
+
+  Known issues:
+    - confusing type information when hover on an identifier
+      due to Typescript leak over. VSCode currently doesn't
+      support completely disabling Typescript
+      `typescript.validate.enable` is not enough
+      https://github.com/Microsoft/vscode/issues/17068
+  */
+
+  /* Flow */
+
+  // disable Javascript validation and use flow instead
+  "javascript.validate.enable": false,
+  // disable Typescript validation and use flow instead
+  "typescript.validate.enable": false,
+  "flow.useNPMPackagedFlow": true,
+
+  /* Prettier */
+
+  "editor.formatOnSave": false,
+  // disable Javascript formatting and use prettier-eslint instead
+  "javascript.format.enable": false,
+  "prettier.eslintIntegration": true,
+
+  /* Flow + Prettier */
+
+  "prettier.parser": "flow",
 }
