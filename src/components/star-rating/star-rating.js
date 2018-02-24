@@ -30,7 +30,7 @@ type Config = {
   // accepts custom Wrapper component
   // main use case is to manage space between stars
   // (e.g. using `:not(:first-of-type)` selector) -> !!!couple to structure!!!
-  Wrapper?: React.ComponentType<*>,
+  Wrapper?: React.ElementType,
 };
 
 type Props = {
@@ -93,8 +93,6 @@ function convertRatingToFillValues(rating: number, maxRating: number): number[] 
 //   ^ more power/flexibility but harder to use, more self wiring required
 
 function customizeStarRating(config: Config) {
-  // Flow 0.54 has issue when using object destructuring with default
-  //   in function param
   const { maxRating, RatingIcon, Wrapper = 'div' } = config;
   return class StarRating extends React.PureComponent<Props, State> {
     state = {
