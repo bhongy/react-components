@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import { glyph } from './star-icon-glyph.json';
 import s from './star-icon.css';
 
 function round(num: number, decimals: number): number {
@@ -20,9 +21,6 @@ const iconProps = {
   'aria-hidden': 'true',
   focusable: 'false',
 };
-
-const glyph =
-  'M66.4 30.6s-7.3-17.3-12-25.8-8.1 0-8.1 0L33.6 30.6l-29 4.5c-7.4 3.6-1.3 8.8-1.3 8.8L23.1 64l-4.9 29.6c-1 8.8 7.7 4 7.7 4L50 84.8 74.7 98c8.4 4 6.8-4.9 6.8-4.9l-4.3-28.8 19.3-20.5c6.4-6.3-1.7-8.4-1.7-8.4l-28.4-4.8z';
 
 // as an icon, all you have to do is:
 //   1) render conditionally based on the value

@@ -60,7 +60,7 @@ declare var __DEV__: ?boolean;
 function convertRatingToFillValues(rating: number, maxRating: number): number[] {
   const isInvalidRange = rating < 0 || rating > maxRating;
   if (__DEV__ && isInvalidRange) {
-    // eslint-disable-next-line no-console
+    // eslint-disable-next-line no-console, max-len
     console.warn(`[StarRating] rating is outside the valid range (0 to ${maxRating} inclusive). Received: ${rating}.`);
   }
 

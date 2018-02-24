@@ -9,6 +9,7 @@
  */
 
 import React, { Component } from 'react';
+import { omit } from 'lodash';
 
 type Props = {
   initialValue?: ?number,
@@ -100,8 +101,7 @@ class NumericInput extends Component<Props, State> {
   };
 
   render() {
-    const { initialValue, ...passThroughProps }: Props = this.props;
-
+    const passThroughProps = omit(this.props, 'initialValue');
     return (
       <input {...passThroughProps} onChange={this.handleChange} value={this.state.inputValue} />
     );
